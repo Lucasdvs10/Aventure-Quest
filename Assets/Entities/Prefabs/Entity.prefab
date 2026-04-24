@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2736325915294292517}
   - component: {fileID: 6853920198539998727}
+  - component: {fileID: 5252457775811276949}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -92,6 +93,20 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &5252457775811276949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637744979769549166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edc717cfc7c1ca4dada087d31c78d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UILife
+  lifeBarImage: {fileID: 5985511060495459683}
+  lifeText: {fileID: 4920418448749699713}
 --- !u!1001 &844562371339614593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -103,6 +118,10 @@ PrefabInstance:
     - target: {fileID: 760343838750254447, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_text
       value: Entity Name
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812991927769417440, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+      propertyPath: m_Name
+      value: LifeBar
       objectReference: {fileID: 0}
     - target: {fileID: 2510849745862496284, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_Name
@@ -193,6 +212,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+--- !u!114 &4920418448749699713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5760292502508329728, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+  m_PrefabInstance: {fileID: 844562371339614593}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &5985511060495459683 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6388553538290261218, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+  m_PrefabInstance: {fileID: 844562371339614593}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!224 &9196608707488671088 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8365603314598649073, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}

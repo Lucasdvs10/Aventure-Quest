@@ -4,15 +4,17 @@ using UnityEngine.Events;
 
 public abstract class ALifeSystem : MonoBehaviour
 {
-    [SerializeField] private int maxLife;
+    private int maxLife;
     private int currentLife;
     [Space]
     
+    public UnityEvent OnLifeChanged;
     public UnityEvent OnTakeDamage;
     public UnityEvent OnDeath;
 
-    protected virtual void Awake()
+    public void Initialize(int maxLife)
     {
+        MaxLife = maxLife;
         CurrentLife = MaxLife;
     }
 
@@ -25,6 +27,12 @@ public abstract class ALifeSystem : MonoBehaviour
             OnDeath.Invoke();
     }
 
+    [ContextMenu("10 de dano")]
+    public void Apply10Damage()
+    {
+        ApplyDamage(10);
+    }
+
     public int MaxLife
     {
         get => maxLife;
@@ -33,6 +41,10 @@ public abstract class ALifeSystem : MonoBehaviour
     public int CurrentLife
     {
         get => currentLife;
-        set => currentLife = value;
+        set
+        {
+            currentLife = value;
+            OnLifeChanged.Invoke();
+        }
     }
 }
