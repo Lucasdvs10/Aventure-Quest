@@ -13,7 +13,7 @@ public class GameContext : MonoBehaviour
         Debug.Assert(SOGameProperties != null, "O SO do gameproperties está nulo no game context!", this);
         GameProperties = SOGameProperties;
 
-        Debug.Assert(PlayerGameObjectInstance != null, "O Player GameObject está nulo no game context!", this);
+        Debug.Assert(PlayerGameObject != null, "O Player GameObject está nulo no game context!", this);
         PlayerGameObjectInstance = PlayerGameObject;
     }
 }
