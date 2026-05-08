@@ -18,15 +18,6 @@ public class QuestionsManager : MonoBehaviour
          questionsList = new()
     {
         new Question(
-            "Quantas bananas se faz um cacho?",
-            "12",
-            "67",
-            "69",
-            "8",
-            "69"
-        ),
-
-        new Question(
             "Qual é a capital do Brasil?",
             "Rio de Janeiro",
             "Brasília",
