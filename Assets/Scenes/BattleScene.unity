@@ -1164,7 +1164,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2047288836}
         m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
-        m_MethodName: SelectOption
+        m_MethodName: ChooseAndAnwser
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1567,7 +1567,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2047288836}
         m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
-        m_MethodName: SelectOption
+        m_MethodName: ChooseAndAnwser
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1837,7 +1837,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2047288836}
         m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
-        m_MethodName: SelectOption
+        m_MethodName: ChooseAndAnwser
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1970,7 +1970,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2047288836}
         m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
-        m_MethodName: SelectOption
+        m_MethodName: ChooseAndAnwser
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2066,6 +2066,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameContext
   SOGameProperties: {fileID: 11400000, guid: 26216370ace005f45940a2f813a59a3d, type: 2}
   PlayerGameObject: {fileID: 1452235031}
+  questionsManager: {fileID: 2047288836}
+  battleManager: {fileID: 2047288837}
+  StatementText: {fileID: 2080772928}
+  buttonA: {fileID: 1070270888}
+  buttonB: {fileID: 2011053188}
+  buttonC: {fileID: 1928589592}
+  buttonD: {fileID: 1654818392}
 --- !u!114 &2047288836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,6 +2085,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565f6cb9df2f71e4cab4f94083b65f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestionsManager
+  OnCorrectAnswer:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWrongAnswer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2047288837
 MonoBehaviour:
   m_ObjectHideFlags: 0
