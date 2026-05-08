@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class GameContext : MonoBehaviour
 {
     public SOGameProperties SOGameProperties;
-    public GameObject PlayerGameObject;
+    public GameObject LeftPlayerGameObject;
+    public GameObject RightPlayerGameObject;
     public QuestionsManager questionsManager;
     public BattleManager battleManager;
 
@@ -18,7 +19,8 @@ public class GameContext : MonoBehaviour
     public static SOGameProperties GameProperties { get; private set; }
     public static QuestionsManager QuestionsManagerInstance { get; private set; }
     public static BattleManager BattleManagerInstance { get; private set; }
-    public static GameObject PlayerGameObjectInstance { get; private set; }
+    public static GameObject LeftPlayerGameObjectInstance { get; private set; }
+    public static GameObject RightPlayerGameObjectInstance { get; private set; }
     public static TMP_Text StatementTextInstance { get; private set; }
     public static Button ButtonAInstance { get; private set; }
     public static Button ButtonBInstance { get; private set; }
@@ -30,8 +32,11 @@ public class GameContext : MonoBehaviour
         Debug.Assert(SOGameProperties != null, "O SO do gameproperties está nulo no game context!", this);
         GameProperties = SOGameProperties;
 
-        Debug.Assert(PlayerGameObject != null, "O Player GameObject está nulo no game context!", this);
-        PlayerGameObjectInstance = PlayerGameObject;
+        Debug.Assert(LeftPlayerGameObject != null, "O Left Player GameObject está nulo no game context!", this);
+        LeftPlayerGameObjectInstance = LeftPlayerGameObject;
+
+        Debug.Assert(RightPlayerGameObject != null, "O Right Player GameObject está nulo no game context!", this);
+        RightPlayerGameObjectInstance = RightPlayerGameObject;
 
         Debug.Assert(questionsManager != null, "O QuestionsManager está nulo no game context!", this);
         QuestionsManagerInstance = questionsManager;

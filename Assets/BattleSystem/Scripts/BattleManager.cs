@@ -4,14 +4,18 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     QuestionsManager questionsManager;
+    ALifeSystem leftEntityLifeSystem;
+    ALifeSystem rightEntityLifeSystem;
     void Awake()
     {
         questionsManager = GameContext.QuestionsManagerInstance;
+
+        leftEntityLifeSystem = GameContext.LeftPlayerGameObjectInstance.GetComponent<ALifeSystem>();
+        rightEntityLifeSystem = GameContext.RightPlayerGameObjectInstance.GetComponent<ALifeSystem>();
     }
 
     void Start()
     {
-        var player = GameContext.PlayerGameObjectInstance.GetComponent<ALifeSystem>();
-        questionsManager.OnWrongAnswer.AddListener(() => player.ApplyDamage(10));
+        questionsManager.OnWrongAnswer.AddListener(() => leftEntityLifeSystem.ApplyDamage(10));
     }
 }
