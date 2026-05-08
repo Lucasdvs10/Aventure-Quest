@@ -8,5 +8,14 @@ public class Question
     public string StatementD;
 
     public string CorrectOption;
-    
+
+    public Question(string statement, string statementA, string statementB, string statementC, string statementD, string correctOption)
+    {
+        Statement = statement;
+        StatementA = statementA;
+        StatementB = statementB;
+        StatementC = statementC;
+        StatementD = statementD;
+        CorrectOption = correctOption;
+    }
 }

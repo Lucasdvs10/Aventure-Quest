@@ -1161,7 +1161,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1070270889}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047288836}
+        m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
+        m_MethodName: SelectOption
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: A
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1070270889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,7 +1564,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1654818393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047288836}
+        m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
+        m_MethodName: SelectOption
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: D
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1654818393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1810,7 +1834,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1928589593}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047288836}
+        m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
+        m_MethodName: SelectOption
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: C
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1928589593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1931,7 +1967,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2011053189}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047288836}
+        m_TargetAssemblyTypeName: QuestionsManager, Assembly-CSharp
+        m_MethodName: SelectOption
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: B
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2011053189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,6 +2028,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2047288834}
   - component: {fileID: 2047288835}
+  - component: {fileID: 2047288837}
+  - component: {fileID: 2047288836}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2016,6 +2066,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameContext
   SOGameProperties: {fileID: 11400000, guid: 26216370ace005f45940a2f813a59a3d, type: 2}
   PlayerGameObject: {fileID: 1452235031}
+--- !u!114 &2047288836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047288833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565f6cb9df2f71e4cab4f94083b65f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionsManager
+--- !u!114 &2047288837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047288833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574ef872ec89717479a4188826bd679d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleManager
 --- !u!1 &2080772926
 GameObject:
   m_ObjectHideFlags: 0
