@@ -10,8 +10,8 @@ public class QuestionsManager : MonoBehaviour
     int currentQuestionIndex = 0;
     string selectedOption = "";
 
-    UnityEvent OnCorrectAnswer;
-    UnityEvent OnWrongAnswer;
+    public UnityEvent OnCorrectAnswer;
+    public UnityEvent OnWrongAnswer;
 
     void Awake()
     {
