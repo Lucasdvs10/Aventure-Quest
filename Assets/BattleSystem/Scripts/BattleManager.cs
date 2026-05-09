@@ -38,7 +38,7 @@ public class BattleManager : MonoBehaviour
     {
         OnAnswer();
 
-        OtherEntity.ApplyDamage(47);
+        OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
 
         CurrentEntityTurn++;
     }
