@@ -36,9 +36,17 @@ public class BattleManager : MonoBehaviour
 
     private void OnCorrectAnswer()
     {
-        OnAnswer();
-
         OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+
+        //Verificar se o other entity morreu. Se sim, executar sequência de game over
+        if(OtherEntity.CurrentLife <= 0)
+        {
+            HandleGameOver();
+            return;
+        }
+
+
+        OnAnswer();
 
         CurrentEntityTurn++;
     }
@@ -48,6 +56,11 @@ public class BattleManager : MonoBehaviour
         OnAnswer();
 
         CurrentEntityTurn++;
+    }
+
+    private void HandleGameOver()
+    {
+        print("Fim de jogo! Abrir tela de game over");
     }
 
     public ALifeSystem CurrentEntity

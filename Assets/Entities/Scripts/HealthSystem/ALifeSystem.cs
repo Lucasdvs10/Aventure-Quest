@@ -43,7 +43,7 @@ public abstract class ALifeSystem : MonoBehaviour
         get => currentLife;
         set
         {
-            currentLife = value;
+            currentLife = Mathf.Clamp(value, 0, maxLife);
             OnLifeChanged.Invoke();
         }
     }
