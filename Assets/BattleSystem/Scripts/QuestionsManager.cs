@@ -13,6 +13,7 @@ public class QuestionsManager : MonoBehaviour
     public UnityEvent OnCorrectAnswer;
     public UnityEvent OnWrongAnswer;
 
+
     void Awake()
     {
          questionsList = new()
@@ -49,7 +50,21 @@ public class QuestionsManager : MonoBehaviour
 
     void Start()
     {
-        var currentQuestion = questionsList[currentQuestionIndex];
+        var currentQuestion = questionsList[CurrentQuestionIndex];
+
+        GameContext.StatementTextInstance.text = currentQuestion.Statement;
+
+        GameContext.ButtonAInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementA;
+        GameContext.ButtonBInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementB;
+        GameContext.ButtonCInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementC;
+        GameContext.ButtonDInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementD;
+    }
+
+    public void GetNextQuestionAndUpdateUI()
+    {
+        CurrentQuestionIndex++;
+
+        var currentQuestion = questionsList[CurrentQuestionIndex];
 
         GameContext.StatementTextInstance.text = currentQuestion.Statement;
 
@@ -74,7 +89,7 @@ public class QuestionsManager : MonoBehaviour
 
     public void SelectOption(string optionLetter)
     {
-        var currentQuestion = questionsList[currentQuestionIndex];
+        var currentQuestion = questionsList[CurrentQuestionIndex];
         switch (optionLetter)
         {
             case "A":
@@ -96,8 +111,23 @@ public class QuestionsManager : MonoBehaviour
 
     bool CheckAnswer(string optionSelected)
     {
-        var currentQuestion = questionsList[currentQuestionIndex];
+        var currentQuestion = questionsList[CurrentQuestionIndex];
         return string.Equals(currentQuestion.CorrectOption, optionSelected);
     }
 
+    public int CurrentQuestionIndex
+    {
+        get => currentQuestionIndex;
+        set
+        {
+            currentQuestionIndex = value;
+            
+            if(currentQuestionIndex < 0)
+                currentQuestionIndex = questionsList.Count - 1;
+            else if(currentQuestionIndex >= questionsList.Count)
+            {
+                currentQuestionIndex = 0;
+            }
+        }
+    }
 }
