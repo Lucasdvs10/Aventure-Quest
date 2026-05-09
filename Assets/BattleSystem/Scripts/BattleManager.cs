@@ -7,6 +7,9 @@ public class BattleManager : MonoBehaviour
     ALifeSystem rightEntityLifeSystem;
     int currentEntityTurn = 0;
 
+    bool leftEntityWasCorrect = false;
+    bool rightEntityWasCorrect = false;
+
     void Awake()
     {
         questionsManager = GameContext.QuestionsManagerInstance;
@@ -32,11 +35,26 @@ public class BattleManager : MonoBehaviour
     private void OnAnswer()
     {
         questionsManager.GetNextQuestionAndUpdateUI();
+
+
+        if(CurrentEntityTurn == 1)
+        {
+            HandleEndRound();
+        }
     }
 
-    private void OnCorrectAnswer()
+    private void HandleEndRound()
     {
-        OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+
+        if (leftEntityWasCorrect)
+        {
+            CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+
+        }
+        if (rightEntityWasCorrect)
+        {
+            OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+        }
 
         //Verificar se o other entity morreu. Se sim, executar sequência de game over
         if(OtherEntity.CurrentLife <= 0)
@@ -46,9 +64,30 @@ public class BattleManager : MonoBehaviour
         }
 
 
+        leftEntityWasCorrect = false;
+        rightEntityWasCorrect = false;
+    }
+
+    private void HandleGameOver()
+    {
+        print("Fim de jogo! Abrir tela de game over");
+    }
+
+
+    private void OnCorrectAnswer()
+    {
+        if(CurrentEntityTurn == 0)
+            leftEntityWasCorrect = true;
+
+        else if(CurrentEntityTurn == 1)
+            rightEntityWasCorrect = true;
+
+
         OnAnswer();
 
         CurrentEntityTurn++;
+
+        print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     private void OnWrongAnswer()
@@ -56,11 +95,8 @@ public class BattleManager : MonoBehaviour
         OnAnswer();
 
         CurrentEntityTurn++;
-    }
 
-    private void HandleGameOver()
-    {
-        print("Fim de jogo! Abrir tela de game over");
+        print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     public ALifeSystem CurrentEntity
@@ -73,6 +109,7 @@ public class BattleManager : MonoBehaviour
             return rightEntityLifeSystem;
         }
     }
+
     public ALifeSystem OtherEntity
     {
         get
