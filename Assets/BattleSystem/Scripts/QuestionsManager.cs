@@ -6,9 +6,10 @@ using UnityEngine.Events;
 
 public class QuestionsManager : MonoBehaviour
 {
-    List<Question> questionsList;
-    int currentQuestionIndex = 0;
-    string selectedOption = "";
+    private IQuestionsProvider questionsProvider;
+    private List<Question> questionsList;
+    private int currentQuestionIndex = 0;
+    private string selectedOption = "";
 
     public UnityEvent OnCorrectAnswer;
     public UnityEvent OnWrongAnswer;
@@ -16,36 +17,9 @@ public class QuestionsManager : MonoBehaviour
 
     void Awake()
     {
-         questionsList = new()
-    {
-        new Question(
-            "Qual é a capital do Brasil?",
-            "Rio de Janeiro",
-            "Brasília",
-            "São Paulo",
-            "Salvador",
-            "Brasília"
-        ),
+        questionsProvider = GameContext.QuestionsProviderInstance;
 
-        new Question(
-            "Quanto é 7 x 8?",
-            "54",
-            "56",
-            "64",
-            "48",
-            "56"
-        ),
-
-        new Question(
-            "Qual linguagem é usada na Unity?",
-            "Python",
-            "Java",
-            "C#",
-            "C++",
-            "C#"
-        )
-    };
-
+        questionsList = questionsProvider.GetQuestions();
     }
 
     void Start()
@@ -80,6 +54,7 @@ public class QuestionsManager : MonoBehaviour
         
         var responseIsRight = CheckAnswer(selectedOption);
 
+        print($"Is answer right {responseIsRight}");
         if(responseIsRight)
             OnCorrectAnswer.Invoke();
         else

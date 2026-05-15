@@ -17,6 +17,7 @@ public class GameContext : MonoBehaviour
     public Button buttonD;
 
     public static SOGameProperties GameProperties { get; private set; }
+    public static IQuestionsProvider QuestionsProviderInstance { get; private set; }
     public static QuestionsManager QuestionsManagerInstance { get; private set; }
     public static BattleManager BattleManagerInstance { get; private set; }
     public static GameObject LeftPlayerGameObjectInstance { get; private set; }
@@ -29,6 +30,9 @@ public class GameContext : MonoBehaviour
 
     void Awake()
     {
+        QuestionsProviderInstance = new QuestionsProviderLocalJson();
+        
+
         Debug.Assert(SOGameProperties != null, "O SO do gameproperties está nulo no game context!", this);
         GameProperties = SOGameProperties;
 
