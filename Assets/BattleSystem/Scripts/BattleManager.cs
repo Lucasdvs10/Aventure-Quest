@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class BattleManager : MonoBehaviour
 
     bool leftEntityWasCorrect = false;
     bool rightEntityWasCorrect = false;
+
+    Coroutine handleEndRoundRoutine;
 
     void Awake()
     {
@@ -41,10 +44,27 @@ public class BattleManager : MonoBehaviour
         {
             HandleEndRound();
         }
+
+        CurrentEntityTurn++;
     }
 
-    private void HandleEndRound()
+    public void HandleEndRound()
     {
+        if(handleEndRoundRoutine != null)
+            StopCoroutine(handleEndRoundRoutine);
+        handleEndRoundRoutine = StartCoroutine(HandleEndRoundRoutine());
+    }
+
+    private IEnumerator HandleEndRoundRoutine()
+    {
+        GameContext.ButtonAInstance.interactable = false;
+        GameContext.ButtonBInstance.interactable = false;
+        GameContext.ButtonCInstance.interactable = false;
+        GameContext.ButtonDInstance.interactable = false;
+
+
+        //Invocar animacao de dano
+        yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
 
         if (leftEntityWasCorrect)
         {
@@ -57,15 +77,22 @@ public class BattleManager : MonoBehaviour
         }
 
         //Verificar se o other entity morreu. Se sim, executar sequência de game over
-        if(OtherEntity.CurrentLife <= 0)
+        if(CurrentEntity.CurrentLife <= 0 || OtherEntity.CurrentLife <= 0)
         {
             HandleGameOver();
-            return;
+            yield break;
         }
-
 
         leftEntityWasCorrect = false;
         rightEntityWasCorrect = false;
+        
+
+        yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
+
+        GameContext.ButtonAInstance.interactable = true;
+        GameContext.ButtonBInstance.interactable = true;
+        GameContext.ButtonCInstance.interactable = true;
+        GameContext.ButtonDInstance.interactable = true;
     }
 
     private void HandleGameOver()
@@ -85,7 +112,6 @@ public class BattleManager : MonoBehaviour
 
         OnAnswer();
 
-        CurrentEntityTurn++;
 
         print($"Vez do jogador {CurrentEntityTurn}");
     }
@@ -94,7 +120,6 @@ public class BattleManager : MonoBehaviour
     {
         OnAnswer();
 
-        CurrentEntityTurn++;
 
         print($"Vez do jogador {CurrentEntityTurn}");
     }
