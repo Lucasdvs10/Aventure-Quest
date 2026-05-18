@@ -2762,6 +2762,7 @@ MonoBehaviour:
   RightPlayerGameObject: {fileID: 1890700247}
   questionsManager: {fileID: 2047288836}
   battleManager: {fileID: 2047288837}
+  uIGameoverScreen: {fileID: 1543352221}
   StatementText: {fileID: 2080772928}
   buttonA: {fileID: 1070270888}
   buttonB: {fileID: 2011053188}
@@ -2797,7 +2798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574ef872ec89717479a4188826bd679d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
-  UIGameoverScreen: {fileID: 1543352221}
+  DelayBewtweenRounds: 0
 --- !u!1 &2080772926
 GameObject:
   m_ObjectHideFlags: 0
