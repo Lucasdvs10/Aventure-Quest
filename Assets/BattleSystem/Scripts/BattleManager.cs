@@ -37,6 +37,11 @@ public class BattleManager : MonoBehaviour
         questionsManager.OnWrongAnswer.RemoveListener(OnWrongAnswer);
     }
 
+    void Start()
+    {
+        CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
+    }
+
     private void OnAnswer()
     {
         questionsManager.GetNextQuestionAndUpdateUI();
@@ -48,6 +53,9 @@ public class BattleManager : MonoBehaviour
         }
 
         CurrentEntityTurn++;
+
+        CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
+        OtherEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(false);
     }
 
     public void HandleEndRound()

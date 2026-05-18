@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -54,7 +53,6 @@ public class QuestionsManager : MonoBehaviour
         
         var responseIsRight = CheckAnswer(selectedOption);
 
-        print($"Is answer right {responseIsRight}");
         if(responseIsRight)
             OnCorrectAnswer.Invoke();
         else
@@ -81,7 +79,6 @@ public class QuestionsManager : MonoBehaviour
                 break;
         }
 
-        // Debug.LogError("A opção selecionada é nula!", this);
     }
 
     bool CheckAnswer(string optionSelected)

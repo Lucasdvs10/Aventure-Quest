@@ -119,6 +119,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Entity Name
       objectReference: {fileID: 0}
+    - target: {fileID: 1148963844630204281, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1812991927769417440, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_Name
       value: LifeBar
@@ -193,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8365603314598649073, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.123
+      value: 1.413
       objectReference: {fileID: 0}
     - target: {fileID: 8365603314598649073, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -206,6 +210,10 @@ PrefabInstance:
     - target: {fileID: 8365603314598649073, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403017352791655860, guid: 0707d47dde7e27041bbc16dcf22c22bb, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
