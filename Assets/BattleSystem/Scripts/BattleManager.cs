@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public bool DelayBewtweenRounds = true;
+
     QuestionsManager questionsManager;
     ALifeSystem leftEntityLifeSystem;
     ALifeSystem rightEntityLifeSystem;
@@ -64,7 +66,8 @@ public class BattleManager : MonoBehaviour
 
 
         //Invocar animacao de dano
-        yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
+        if(DelayBewtweenRounds)
+            yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
 
         if (leftEntityWasCorrect)
         {
@@ -87,7 +90,8 @@ public class BattleManager : MonoBehaviour
         rightEntityWasCorrect = false;
         
 
-        yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
+        if(DelayBewtweenRounds)
+            yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
 
         GameContext.ButtonAInstance.interactable = true;
         GameContext.ButtonBInstance.interactable = true;
@@ -97,7 +101,7 @@ public class BattleManager : MonoBehaviour
 
     private void HandleGameOver()
     {
-        print("Fim de jogo! Abrir tela de game over");
+        GameContext.UIGameoverScreenInstance.SetActive(true);
     }
 
 
