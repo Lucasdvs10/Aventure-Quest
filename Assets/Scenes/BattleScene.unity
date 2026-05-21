@@ -2949,7 +2949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574ef872ec89717479a4188826bd679d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
-  DelayBewtweenRounds: 0
+  DelayBewtweenRounds: 1
 --- !u!114 &2047288838
 MonoBehaviour:
   m_ObjectHideFlags: 0

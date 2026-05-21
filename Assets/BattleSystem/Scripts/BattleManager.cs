@@ -13,7 +13,14 @@ public class BattleManager : MonoBehaviour
     bool leftEntityWasCorrect = false;
     bool rightEntityWasCorrect = false;
 
+    Animator leftAnimator;
+    Animator rightAnimator;
+    AudioSource leftDamageSFX;
+    AudioSource rightDamageSFX;
+
     Coroutine handleEndRoundRoutine;
+    Coroutine onAnswerRoutine;
+
 
     void Awake()
     {
@@ -21,6 +28,12 @@ public class BattleManager : MonoBehaviour
 
         leftEntityLifeSystem = GameContext.LeftPlayerGameObjectInstance.GetComponent<ALifeSystem>();
         rightEntityLifeSystem = GameContext.RightPlayerGameObjectInstance.GetComponent<ALifeSystem>();
+
+        leftAnimator = leftEntityLifeSystem.GetComponent<Animator>();
+        rightAnimator = rightEntityLifeSystem.GetComponent<Animator>();
+
+        leftDamageSFX = leftEntityLifeSystem.GetComponentInChildren<AudioSource>();
+        rightDamageSFX = rightEntityLifeSystem.GetComponentInChildren<AudioSource>();
 
         currentEntityTurn = 0;
     }
@@ -42,14 +55,22 @@ public class BattleManager : MonoBehaviour
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
     }
 
-    private void OnAnswer()
+    public void OnAnswer()
+    {
+        if(onAnswerRoutine != null)
+            StopCoroutine(onAnswerRoutine);
+        onAnswerRoutine = StartCoroutine(OnAnswerRoutine());
+    }
+
+
+    private IEnumerator OnAnswerRoutine()
     {
         questionsManager.GetNextQuestionAndUpdateUI();
 
 
         if(CurrentEntityTurn == 1)
         {
-            HandleEndRound();
+            yield return HandleEndRoundRoutine();
         }
 
         CurrentEntityTurn++;
@@ -73,19 +94,37 @@ public class BattleManager : MonoBehaviour
         GameContext.ButtonDInstance.interactable = false;
 
 
-        //Invocar animacao de dano
-        if(DelayBewtweenRounds)
-            yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
 
         if (leftEntityWasCorrect)
         {
-            CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
 
+            leftAnimator.Play("Attack");
+            rightAnimator.Play("TakeDamage");
+
+
+            yield return new WaitForSeconds(0.5f);
+            CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+            rightDamageSFX.Play();
+
+            //Invocar animacao de dano
+            if (DelayBewtweenRounds)
+                yield return new WaitForSeconds(1f); //Depois de rodar todas as animacoes a aplicar os danos
         }
         if (rightEntityWasCorrect)
         {
+
+            rightAnimator.Play("Attack");
+            leftAnimator.Play("TakeDamage");
+
+            yield return new WaitForSeconds(0.5f);
             OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+            leftDamageSFX.Play();
+
+            //Invocar animacao de dano
+            if (DelayBewtweenRounds)
+                yield return new WaitForSeconds(1f); //Depois de rodar todas as animacoes a aplicar os danos
         }
+
 
         //Verificar se o other entity morreu. Se sim, executar sequência de game over
         if(CurrentEntity.CurrentLife <= 0 || OtherEntity.CurrentLife <= 0)
@@ -98,8 +137,6 @@ public class BattleManager : MonoBehaviour
         rightEntityWasCorrect = false;
         
 
-        if(DelayBewtweenRounds)
-            yield return new WaitForSeconds(2.5f); //Depois de rodar todas as animacoes a aplicar os danos
 
         GameContext.ButtonAInstance.interactable = true;
         GameContext.ButtonBInstance.interactable = true;
