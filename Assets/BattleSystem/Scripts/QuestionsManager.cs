@@ -19,6 +19,7 @@ public class QuestionsManager : MonoBehaviour
         questionsProvider = GameContext.QuestionsProviderInstance;
         questionsList = await questionsProvider.GetQuestionsAsync();
 
+        Shuffle(ref questionsList);
 
         var currentQuestion = questionsList[CurrentQuestionIndex];
 
@@ -28,6 +29,18 @@ public class QuestionsManager : MonoBehaviour
         GameContext.ButtonBInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementB;
         GameContext.ButtonCInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementC;
         GameContext.ButtonDInstance.GetComponentInChildren<TMP_Text>().text = currentQuestion.StatementD;
+    }
+
+    private void Shuffle<T>(ref List<T> list)
+    {
+        System.Random random = new();
+
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = random.Next(i + 1);
+
+            (list[i], list[j]) = (list[j], list[i]);
+        }
     }
 
     public void GetNextQuestionAndUpdateUI()
