@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleManager : MonoBehaviour
+public class BattleManagerMultiplayer : MonoBehaviour
 {
     public bool DelayBewtweenRounds = true;
 

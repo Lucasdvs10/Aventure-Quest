@@ -10,7 +10,7 @@ public class GameContext : MonoBehaviour
     public GameObject LeftPlayerGameObject;
     public GameObject RightPlayerGameObject;
     public QuestionsManager questionsManager;
-    public BattleManager battleManager;
+    public BattleManagerMultiplayer battleManager;
 
     public GameObject uIGameoverScreen;
 
@@ -23,7 +23,7 @@ public class GameContext : MonoBehaviour
     public static SOGameProperties GameProperties { get; private set; }
     public static IQuestionsProvider QuestionsProviderInstance { get; private set; }
     public static QuestionsManager QuestionsManagerInstance { get; private set; }
-    public static BattleManager BattleManagerInstance { get; private set; }
+    public static BattleManagerMultiplayer BattleManagerInstance { get; private set; }
     public static GameObject LeftPlayerGameObjectInstance { get; private set; }
     public static GameObject RightPlayerGameObjectInstance { get; private set; }
     public static GameObject UIGameoverScreenInstance { get; private set; }
