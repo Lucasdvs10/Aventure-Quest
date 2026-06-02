@@ -70,8 +70,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
         yield return HandleEndRoundRoutine();
 
-        // CurrentEntityTurn++;
-
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
         OtherEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(false);
     }
@@ -151,9 +149,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
     {
         leftEntityWasCorrect = true;
 
-        // else if(CurrentEntityTurn == 1)
-        //     rightEntityWasCorrect = true;
-
         OnAnswer();
     }
 
@@ -163,7 +158,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
 
         OnAnswer();
-        // print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     public ALifeSystem CurrentEntity
