@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public interface IQuestionsProvider
 {
-    public void SaveQuestion(Question newQuestion);
-    public List<Question> GetQuestions();
+    Task SaveQuestionAsync(Question newQuestion);
+    Task<List<Question>> GetQuestionsAsync();
 }

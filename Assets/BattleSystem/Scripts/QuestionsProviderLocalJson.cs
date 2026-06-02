@@ -1,39 +1,54 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class QuestionsProviderLocalJson : IQuestionsProvider
 {
-    const string FilePath = "QuestionsDataBase.json";
+    private const string FilePath = "QuestionsDataBase.json";
 
-    public List<Question> GetQuestions()
+    public async Task<List<Question>> GetQuestionsAsync()
     {
-        List<Question> questionsList = new();
+        string fullPath = Path.Combine(Application.persistentDataPath, FilePath);
 
-        var jsonString = File.ReadAllText($"{Application.persistentDataPath}/{FilePath}");
-        questionsList = JsonUtility.FromJson<QuestionsListWrapper>(jsonString).questionslist;
-
-        return questionsList;
-    }
-
-    public void SaveQuestion(Question newQuestion)
-    {
-        List<Question> questionsList = new (){newQuestion};
-
-        var json = JsonUtility.ToJson(new QuestionsListWrapper(questionsList), true);
-        Debug.Log(json);
+        if (!File.Exists(fullPath))
+            return new List<Question>();
 
         try
         {
+            string jsonString = await File.ReadAllTextAsync(fullPath);
 
-            File.WriteAllText($"{Application.persistentDataPath}/{FilePath}", json);
+            var wrapper = JsonUtility.FromJson<QuestionsListWrapper>(jsonString);
+
+            return wrapper?.questionslist ?? new List<Question>();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogError(e);
-        } 
+            return new List<Question>();
+        }
+    }
+
+    public async Task SaveQuestionAsync(Question newQuestion)
+    {
+        string fullPath = Path.Combine(Application.persistentDataPath, FilePath);
+
+        try
+        {
+            List<Question> questionsList = new() { newQuestion };
+
+            string json = JsonUtility.ToJson(
+                new QuestionsListWrapper(questionsList),
+                true);
+
+            await File.WriteAllTextAsync(fullPath, json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
     }
 
     [Serializable]
@@ -45,6 +60,5 @@ public class QuestionsProviderLocalJson : IQuestionsProvider
         {
             questionslist = questions;
         }
-
     }
 }

@@ -14,15 +14,12 @@ public class QuestionsManager : MonoBehaviour
     public UnityEvent OnWrongAnswer;
 
 
-    void Awake()
+    async void Awake()
     {
         questionsProvider = GameContext.QuestionsProviderInstance;
+        questionsList = await questionsProvider.GetQuestionsAsync();
 
-        questionsList = questionsProvider.GetQuestions();
-    }
 
-    void Start()
-    {
         var currentQuestion = questionsList[CurrentQuestionIndex];
 
         GameContext.StatementTextInstance.text = currentQuestion.Statement;
