@@ -70,7 +70,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
         yield return HandleEndRoundRoutine();
 
-        CurrentEntityTurn++;
+        // CurrentEntityTurn++;
 
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
         OtherEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(false);
@@ -90,6 +90,9 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         GameContext.ButtonCInstance.interactable = false;
         GameContext.ButtonDInstance.interactable = false;
 
+
+        CurrentEntityTurn++;
+
         if (leftEntityWasCorrect)
         {
 
@@ -101,7 +104,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
             CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
             rightDamageSFX.Play();
 
-            //Invocar animacao de dano
             if (DelayBewtweenRounds)
                 yield return new WaitForSeconds(1f); //Depois de rodar todas as animacoes a aplicar os danos
         }
@@ -115,7 +117,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
             OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
             leftDamageSFX.Play();
 
-            //Invocar animacao de dano
             if (DelayBewtweenRounds)
                 yield return new WaitForSeconds(1f); //Depois de rodar todas as animacoes a aplicar os danos
         }
@@ -132,6 +133,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         rightEntityWasCorrect = false;
 
 
+        CurrentEntityTurn++;
 
         GameContext.ButtonAInstance.interactable = true;
         GameContext.ButtonBInstance.interactable = true;
@@ -157,10 +159,10 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     private void OnWrongAnswer()
     {
-        OnAnswer();
         rightEntityWasCorrect = true;
 
 
+        OnAnswer();
         // print($"Vez do jogador {CurrentEntityTurn}");
     }
 
