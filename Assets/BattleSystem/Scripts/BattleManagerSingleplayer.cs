@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BattleManagerSingleplayer : MonoBehaviour
+public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 {
     public bool DelayBewtweenRounds = true;
 
@@ -57,7 +57,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
 
     public void OnAnswer()
     {
-        if(onAnswerRoutine != null)
+        if (onAnswerRoutine != null)
             StopCoroutine(onAnswerRoutine);
         onAnswerRoutine = StartCoroutine(OnAnswerRoutine());
     }
@@ -68,10 +68,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
         questionsManager.GetNextQuestionAndUpdateUI();
 
 
-        if(CurrentEntityTurn == 1)
-        {
-            yield return HandleEndRoundRoutine();
-        }
+        yield return HandleEndRoundRoutine();
 
         CurrentEntityTurn++;
 
@@ -81,7 +78,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
 
     public void HandleEndRound()
     {
-        if(handleEndRoundRoutine != null)
+        if (handleEndRoundRoutine != null)
             StopCoroutine(handleEndRoundRoutine);
         handleEndRoundRoutine = StartCoroutine(HandleEndRoundRoutine());
     }
@@ -92,8 +89,6 @@ public class BattleManagerSingleplayer : MonoBehaviour
         GameContext.ButtonBInstance.interactable = false;
         GameContext.ButtonCInstance.interactable = false;
         GameContext.ButtonDInstance.interactable = false;
-
-
 
         if (leftEntityWasCorrect)
         {
@@ -127,7 +122,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
 
 
         //Verificar se o other entity morreu. Se sim, executar sequência de game over
-        if(CurrentEntity.CurrentLife <= 0 || OtherEntity.CurrentLife <= 0)
+        if (CurrentEntity.CurrentLife <= 0 || OtherEntity.CurrentLife <= 0)
         {
             HandleGameOver();
             yield break;
@@ -135,7 +130,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
 
         leftEntityWasCorrect = false;
         rightEntityWasCorrect = false;
-        
+
 
 
         GameContext.ButtonAInstance.interactable = true;
@@ -152,32 +147,28 @@ public class BattleManagerSingleplayer : MonoBehaviour
 
     private void OnCorrectAnswer()
     {
-        if(CurrentEntityTurn == 0)
-            leftEntityWasCorrect = true;
+        leftEntityWasCorrect = true;
 
-        else if(CurrentEntityTurn == 1)
-            rightEntityWasCorrect = true;
-
+        // else if(CurrentEntityTurn == 1)
+        //     rightEntityWasCorrect = true;
 
         OnAnswer();
-
-
-        print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     private void OnWrongAnswer()
     {
         OnAnswer();
+        rightEntityWasCorrect = true;
 
 
-        print($"Vez do jogador {CurrentEntityTurn}");
+        // print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     public ALifeSystem CurrentEntity
     {
         get
         {
-            if(CurrentEntityTurn == 0)
+            if (CurrentEntityTurn == 0)
                 return leftEntityLifeSystem;
 
             return rightEntityLifeSystem;
@@ -188,7 +179,7 @@ public class BattleManagerSingleplayer : MonoBehaviour
     {
         get
         {
-            if(CurrentEntityTurn == 0)
+            if (CurrentEntityTurn == 0)
                 return rightEntityLifeSystem;
 
             return leftEntityLifeSystem;
@@ -202,11 +193,11 @@ public class BattleManagerSingleplayer : MonoBehaviour
         {
             currentEntityTurn = value;
 
-            if(currentEntityTurn >= 2)
+            if (currentEntityTurn >= 2)
                 currentEntityTurn = 0;
-            
-            else if(currentEntityTurn < 0)
-            currentEntityTurn = 1;
+
+            else if (currentEntityTurn < 0)
+                currentEntityTurn = 1;
         }
     }
 }

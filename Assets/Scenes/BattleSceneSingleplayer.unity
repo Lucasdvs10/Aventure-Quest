@@ -525,6 +525,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 815506752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &356748935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
+  m_PrefabInstance: {fileID: 7189156376271764593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &449321006
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,9 +3234,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2047288834}
   - component: {fileID: 2047288835}
-  - component: {fileID: 2047288837}
   - component: {fileID: 2047288836}
   - component: {fileID: 2047288838}
+  - component: {fileID: 2047288839}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3269,9 +3274,8 @@ MonoBehaviour:
   UseLocalQuestionsProvider: 1
   SOGameProperties: {fileID: 11400000, guid: 26216370ace005f45940a2f813a59a3d, type: 2}
   LeftPlayerGameObject: {fileID: 1452235031}
-  RightPlayerGameObject: {fileID: 0}
+  RightPlayerGameObject: {fileID: 356748935}
   questionsManager: {fileID: 2047288836}
-  battleManager: {fileID: 2047288837}
   uIGameoverScreen: {fileID: 1543352221}
   StatementText: {fileID: 2080772928}
   buttonA: {fileID: 1070270888}
@@ -3296,19 +3300,6 @@ MonoBehaviour:
   OnWrongAnswer:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2047288837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047288833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 574ef872ec89717479a4188826bd679d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BattleManager
-  DelayBewtweenRounds: 1
 --- !u!114 &2047288838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3321,6 +3312,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59aa610144ab7104c84d033b83db296e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+--- !u!114 &2047288839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047288833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4de4d6143dafc4592ce0331d78772e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleManagerSingleplayer
+  DelayBewtweenRounds: 1
 --- !u!1 &2080772926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,7 +3670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3674,7 +3678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
       propertyPath: m_LocalPosition.z

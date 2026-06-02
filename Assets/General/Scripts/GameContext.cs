@@ -10,7 +10,6 @@ public class GameContext : MonoBehaviour
     public GameObject LeftPlayerGameObject;
     public GameObject RightPlayerGameObject;
     public QuestionsManager questionsManager;
-    public BattleManagerMultiplayer battleManager;
 
     public GameObject uIGameoverScreen;
 
@@ -23,7 +22,7 @@ public class GameContext : MonoBehaviour
     public static SOGameProperties GameProperties { get; private set; }
     public static IQuestionsProvider QuestionsProviderInstance { get; private set; }
     public static QuestionsManager QuestionsManagerInstance { get; private set; }
-    public static BattleManagerMultiplayer BattleManagerInstance { get; private set; }
+    public static IBattleManager BattleManagerInstance { get; private set; }
     public static GameObject LeftPlayerGameObjectInstance { get; private set; }
     public static GameObject RightPlayerGameObjectInstance { get; private set; }
     public static GameObject UIGameoverScreenInstance { get; private set; }
@@ -52,8 +51,8 @@ public class GameContext : MonoBehaviour
         Debug.Assert(questionsManager != null, "O QuestionsManager está nulo no game context!", this);
         QuestionsManagerInstance = questionsManager;
 
-        Debug.Assert(battleManager != null, "O BattleManager está nulo no game context!", this);
-        BattleManagerInstance = battleManager;
+        BattleManagerInstance = GetComponent<IBattleManager>();
+        Debug.Assert(BattleManagerInstance != null, "O BattleManager está nulo no game context!", this);
 
         Debug.Assert(uIGameoverScreen != null, "O UIGameoverScreen está nulo no game context!", this);
         UIGameoverScreenInstance = uIGameoverScreen;

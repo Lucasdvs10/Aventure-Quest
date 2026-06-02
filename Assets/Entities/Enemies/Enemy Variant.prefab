@@ -67,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 637744979769549166, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4726162177142596503}
+    - targetCorrespondingSourceObject: {fileID: 637744979769549166, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5248746527737102631}
   m_SourcePrefab: {fileID: 100100000, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
 --- !u!1 &5423194087779465385 stripped
 GameObject:
@@ -85,10 +88,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb9b7399aabaf24d957f305e96ec5e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLifeSystem
-  maxLife: 100
+  OnLifeChanged:
+    m_PersistentCalls:
+      m_Calls: []
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &5248746527737102631
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5423194087779465385}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b1779000f9ef65045a97d6a1f6d91a40, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
