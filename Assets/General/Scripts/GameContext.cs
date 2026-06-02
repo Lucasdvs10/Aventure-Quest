@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class GameContext : MonoBehaviour
 {
+    public bool UseLocalQuestionsProvider = true;
+
     public SOGameProperties SOGameProperties;
     public GameObject LeftPlayerGameObject;
     public GameObject RightPlayerGameObject;
@@ -33,8 +35,10 @@ public class GameContext : MonoBehaviour
 
     void Awake()
     {
-        QuestionsProviderInstance = new QuestionsProviderLocalJson();
-        
+        if(UseLocalQuestionsProvider)
+            QuestionsProviderInstance = new QuestionsProviderLocalJson();
+        else
+            QuestionsProviderInstance = new QuestionsProviderAPI();
 
         Debug.Assert(SOGameProperties != null, "O SO do gameproperties está nulo no game context!", this);
         GameProperties = SOGameProperties;
