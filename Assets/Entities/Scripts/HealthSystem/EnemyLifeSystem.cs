@@ -4,6 +4,6 @@ public class EnemyLifeSystem : ALifeSystem
 {
     private void Awake()
     {
-        Initialize(100);
+        Initialize(GameContext.GameProperties.EnemyMaxLife);
     }
 }

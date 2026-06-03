@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3947a88767b6ced46b8ca2be76ddf67d, type: 3}
-  m_Name: GameProperties
+  m_Name: GamePropertiesTutorial
   m_EditorClassIdentifier: Assembly-CSharp::SOGameProperties
-  PlayerMaxLife: 100
+  PlayerMaxLife: 20
   DamageOnCorrectAnswer: 10
-  EnemyMaxLife: 100
+  EnemyMaxLife: 20

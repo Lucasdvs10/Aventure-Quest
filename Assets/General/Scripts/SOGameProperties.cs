@@ -7,5 +7,7 @@ public class SOGameProperties : ScriptableObject
     public int PlayerMaxLife;
     public int DamageOnCorrectAnswer;
 
+    [Header("Enemy")]
+    public int EnemyMaxLife;
     
 }
