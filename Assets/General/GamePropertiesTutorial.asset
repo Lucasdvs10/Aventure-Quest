@@ -15,3 +15,4 @@ MonoBehaviour:
   PlayerMaxLife: 20
   DamageOnCorrectAnswer: 10
   EnemyMaxLife: 20
+  answerExplanationDuration: 2

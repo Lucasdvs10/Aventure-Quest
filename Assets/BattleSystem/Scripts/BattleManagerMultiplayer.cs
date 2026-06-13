@@ -20,6 +20,7 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
 
     Coroutine handleEndRoundRoutine;
     Coroutine onAnswerRoutine;
+    Coroutine onWrongAnswerRoutine;
 
 
     void Awake()
@@ -65,13 +66,14 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
 
     private IEnumerator OnAnswerRoutine()
     {
+
+        // if(CurrentEntityTurn == 1)
+        // {
+        yield return HandleEndRoundRoutine();
+        // }
+
         questionsManager.GetNextQuestionAndUpdateUI();
 
-
-        if(CurrentEntityTurn == 1)
-        {
-            yield return HandleEndRoundRoutine();
-        }
 
         CurrentEntityTurn++;
 
@@ -94,7 +96,6 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
         GameContext.ButtonDInstance.interactable = false;
 
 
-
         if (leftEntityWasCorrect)
         {
 
@@ -103,7 +104,7 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
 
 
             yield return new WaitForSeconds(0.5f);
-            CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+            OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
             rightDamageSFX.Play();
 
             //Invocar animacao de dano
@@ -160,17 +161,33 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
 
 
         OnAnswer();
-
-
         print($"Vez do jogador {CurrentEntityTurn}");
     }
 
     private void OnWrongAnswer()
     {
+        if(onWrongAnswerRoutine != null)
+            StopCoroutine(onWrongAnswerRoutine);
+        onWrongAnswerRoutine = StartCoroutine(OnWrongAnswerRoutine());
+    }
+
+    private IEnumerator OnWrongAnswerRoutine()
+    {
+        questionsManager.ShowAnswerExplanation();
+
+        GameContext.ButtonAInstance.interactable = false;
+        GameContext.ButtonBInstance.interactable = false;
+        GameContext.ButtonCInstance.interactable = false;
+        GameContext.ButtonDInstance.interactable = false;
+
+        yield return new WaitForSeconds(GameContext.GameProperties.answerExplanationDuration);
+
         OnAnswer();
 
-
-        print($"Vez do jogador {CurrentEntityTurn}");
+        GameContext.ButtonAInstance.interactable = true;
+        GameContext.ButtonBInstance.interactable = true;
+        GameContext.ButtonCInstance.interactable = true;
+        GameContext.ButtonDInstance.interactable = true;
     }
 
     public ALifeSystem CurrentEntity

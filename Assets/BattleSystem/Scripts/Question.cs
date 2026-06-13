@@ -11,8 +11,9 @@ public class Question
     public string StatementD;
 
     public string CorrectOption;
+    public string AnswerExplanation;
 
-    public Question(string statement, string statementA, string statementB, string statementC, string statementD, string correctOption)
+    public Question(string statement, string statementA, string statementB, string statementC, string statementD, string correctOption, string answerExplanation="")
     {
         Statement = statement;
         StatementA = statementA;
@@ -20,5 +21,6 @@ public class Question
         StatementC = statementC;
         StatementD = statementD;
         CorrectOption = correctOption;
+        AnswerExplanation = answerExplanation;
     }
 }

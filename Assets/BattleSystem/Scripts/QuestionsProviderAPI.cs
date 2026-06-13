@@ -56,7 +56,8 @@ public class QuestionsProviderAPI : IQuestionsProvider
                         apiQuestion.choices[1].label,
                         apiQuestion.choices[2].label,
                         apiQuestion.choices[3].label,
-                        correctOption
+                        correctOption,
+                        apiQuestion.answer_explanation
                     )
                 );
             }

@@ -9,5 +9,7 @@ public class SOGameProperties : ScriptableObject
 
     [Header("Enemy")]
     public int EnemyMaxLife;
-    
+
+    [Header("Configuration")]
+    public float answerExplanationDuration;
 }

@@ -43,6 +43,12 @@ public class QuestionsManager : MonoBehaviour
         }
     }
 
+    public void ShowAnswerExplanation()
+    {
+        var currentQuestion = questionsList[CurrentQuestionIndex];
+        GameContext.StatementTextInstance.text = $"Errado! {currentQuestion.AnswerExplanation}";
+    }
+
     public void GetNextQuestionAndUpdateUI()
     {
         CurrentQuestionIndex++;
@@ -111,5 +117,10 @@ public class QuestionsManager : MonoBehaviour
                 currentQuestionIndex = 0;
             }
         }
+    }
+
+    public Question CurrentQuestion
+    {
+        get => questionsList[CurrentQuestionIndex];
     }
 }
