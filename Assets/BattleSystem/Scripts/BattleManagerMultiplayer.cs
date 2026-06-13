@@ -67,15 +67,14 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
     private IEnumerator OnAnswerRoutine()
     {
 
-        // if(CurrentEntityTurn == 1)
-        // {
-        yield return HandleEndRoundRoutine();
-        // }
-
-        questionsManager.GetNextQuestionAndUpdateUI();
-
+        if(CurrentEntityTurn == 1)
+        {
+            yield return HandleEndRoundRoutine();
+        }
 
         CurrentEntityTurn++;
+        questionsManager.GetNextQuestionAndUpdateUI();
+
 
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
         OtherEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(false);
@@ -104,7 +103,7 @@ public class BattleManagerMultiplayer : MonoBehaviour, IBattleManager
 
 
             yield return new WaitForSeconds(0.5f);
-            OtherEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
+            CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
             rightDamageSFX.Play();
 
             //Invocar animacao de dano
