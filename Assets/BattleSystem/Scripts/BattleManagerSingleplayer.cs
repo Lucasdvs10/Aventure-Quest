@@ -20,6 +20,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     Coroutine handleEndRoundRoutine;
     Coroutine onAnswerRoutine;
+    Coroutine onWrongAnswerRoutine;
 
 
     void Awake()
@@ -68,6 +69,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         questionsManager.GetNextQuestionAndUpdateUI();
 
 
+        CurrentEntityTurn++;
         yield return HandleEndRoundRoutine();
 
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
@@ -89,14 +91,12 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         GameContext.ButtonDInstance.interactable = false;
 
 
-        CurrentEntityTurn++;
 
         if (leftEntityWasCorrect)
         {
 
             leftAnimator.Play("Attack");
             rightAnimator.Play("TakeDamage");
-
 
             yield return new WaitForSeconds(0.5f);
             CurrentEntity.ApplyDamage(GameContext.GameProperties.DamageOnCorrectAnswer);
@@ -154,10 +154,29 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     private void OnWrongAnswer()
     {
+        if(onWrongAnswerRoutine != null)
+            StopCoroutine(onWrongAnswerRoutine);
+        onWrongAnswerRoutine = StartCoroutine(OnWrongAnswerRoutine());
+    }
+
+    private IEnumerator OnWrongAnswerRoutine()
+    {
+        questionsManager.ShowAnswerExplanation();
+
+        GameContext.ButtonAInstance.interactable = false;
+        GameContext.ButtonBInstance.interactable = false;
+        GameContext.ButtonCInstance.interactable = false;
+        GameContext.ButtonDInstance.interactable = false;
+
+        yield return new WaitForSeconds(GameContext.GameProperties.answerExplanationDuration);
+
         rightEntityWasCorrect = true;
-
-
         OnAnswer();
+
+        GameContext.ButtonAInstance.interactable = true;
+        GameContext.ButtonBInstance.interactable = true;
+        GameContext.ButtonCInstance.interactable = true;
+        GameContext.ButtonDInstance.interactable = true;
     }
 
     public ALifeSystem CurrentEntity
