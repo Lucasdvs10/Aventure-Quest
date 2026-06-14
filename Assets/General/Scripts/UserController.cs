@@ -8,7 +8,7 @@ public class UserController
 {
     private const string BaseUrl = "https://dungeon-quest-api.fly.dev/api";
     private string LoginEndpoint = $"{BaseUrl}/users/login";
-
+    private string SignupUserEndpoint = $"{BaseUrl}/users";
     private static readonly HttpClient HttpClient = new();
 
 
@@ -84,5 +84,68 @@ public class UserController
     private class LoginResult
     {
         public bool valid;
+    }
+
+
+    public async Task<bool> RegisterAsync(
+    string userName,
+    string password)
+    {
+        try
+        {
+            RegisterRequest request = new()
+            {
+                user_name = userName,
+                password = password,
+                high_score = 0,
+                active = true
+            };
+
+            string json =
+                JsonUtility.ToJson(request);
+
+            StringContent content =
+                new(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+            HttpResponseMessage response =
+                await HttpClient.PostAsync(
+                    SignupUserEndpoint,
+                    content
+                );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Debug.LogWarning(
+                    $"Erro ao criar usuário: {response.StatusCode}"
+                );
+
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(
+                $"Erro ao criar usuário: {e}"
+            );
+
+            return false;
+        }
+    }
+
+    [Serializable]
+    private class RegisterRequest
+    {
+        public string user_name;
+        public string password;
+
+        public int high_score;
+
+        public bool active;
     }
 }
