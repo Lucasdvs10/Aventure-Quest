@@ -3379,7 +3379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1822404553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3975,7 +3975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameContext
   UseLocalQuestionsProvider: 0
-  SOGameProperties: {fileID: 11400000, guid: 26216370ace005f45940a2f813a59a3d, type: 2}
+  SOGameProperties: {fileID: 11400000, guid: 39264a2db912b1a42a0896e10326cdde, type: 2}
   LeftPlayerGameObject: {fileID: 1452235031}
   RightPlayerGameObject: {fileID: 356748935}
   questionsManager: {fileID: 2047288836}

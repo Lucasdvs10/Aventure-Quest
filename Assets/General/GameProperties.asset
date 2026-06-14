@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SOGameProperties
   PlayerMaxLife: 100
   DamageOnCorrectAnswer: 10
-  EnemyMaxLife: 100
+  EnemyMaxLife: 10
   answerExplanationDuration: 2
