@@ -55,7 +55,29 @@ public class UserController
                     responseJson
                 );
 
-            return loginResponse?.response?.valid ?? false;
+            bool loginValid =
+                loginResponse?.response?.valid ?? false;
+
+            if (
+                loginValid &&
+                !string.IsNullOrEmpty(
+                    loginResponse.response.user.id
+                )
+            )
+            {
+                PlayerPrefs.SetString(
+                    "CurrentUserID",
+                    loginResponse.response.user.id
+                );
+
+                PlayerPrefs.Save();
+
+                Debug.Log(
+                    $"Usuário salvo: {loginResponse.response.user.id}"
+                );
+            }
+
+            return loginValid;
         }
         catch (Exception e)
         {
@@ -84,6 +106,21 @@ public class UserController
     private class LoginResult
     {
         public bool valid;
+
+        public UserData user;
+    }
+
+
+    [Serializable]
+    private class UserData
+    {
+        public string id;
+
+        public string user_name;
+
+        public int high_score;
+
+        public bool active;
     }
 
 
