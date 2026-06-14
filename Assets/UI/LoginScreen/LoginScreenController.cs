@@ -4,6 +4,7 @@ using UnityEngine;
 public class LoginScreenController : MonoBehaviour
 {
     UserController userController;
+    SceneLoader sceneLoader;
     
     [Header("Login")]
     [SerializeField] private TMP_InputField loginInputField;
@@ -16,6 +17,7 @@ public class LoginScreenController : MonoBehaviour
     void Awake()
     {
         userController = new UserController();
+        sceneLoader = GetComponent<SceneLoader>();
     }
 
     public async void Login()
@@ -24,6 +26,9 @@ public class LoginScreenController : MonoBehaviour
         var password = passwordInputField.text;
 
         var response = await userController.LoginAsync(username, password);
+
+        if(response)
+            sceneLoader.LoadScene("MainMenu");
     }
 
     public async void Signup()
