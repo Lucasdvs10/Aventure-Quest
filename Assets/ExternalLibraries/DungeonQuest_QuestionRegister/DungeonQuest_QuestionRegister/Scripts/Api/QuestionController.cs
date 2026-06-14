@@ -56,6 +56,7 @@ public class QuestionController
 
     /// <param name="choiceLabels">Rótulos das alternativas (já sem vazias), em ordem.</param>
     /// <param name="correctIndex">Índice (em choiceLabels) da alternativa correta.</param>
+
     public async Task<CreateQuestionResult> CreateQuestionAsync(
     string prompt,
     string explanation,
@@ -88,28 +89,50 @@ public class QuestionController
                 return new CreateQuestionResult
                 {
                     ok = false,
-                    error = "Resposta correta inválida."
+                    error = "Alternativa correta inválida."
                 };
+            }
+
+            string createdBy =
+                PlayerPrefs.GetString(
+                    "CurrentUserID",
+                    ""
+                );
+
+            if (string.IsNullOrEmpty(createdBy))
+            {
+                return new CreateQuestionResult
+                {
+                    ok = false,
+                    error = "Usuário não autenticado."
+                };
+            }
+
+            var choices = new List<object>();
+
+            for (int i = 0; i < choiceLabels.Count; i++)
+            {
+                choices.Add(new
+                {
+                    label = choiceLabels[i],
+                    correct = i == correctIndex
+                });
             }
 
             var body = new
             {
                 prompt,
 
-                answer_id = PlaceholderAnswerId,
+                created_by = createdBy,
+
+                // Mantido porque a API ainda espera esse campo.
 
                 answer_explanation = explanation,
 
-                tag_ids = tagIds,
+                tags = tagIds ?? new List<string>(),
 
-                choices = choiceLabels.ConvertAll(
-                    label => new
-                    {
-                        label
-                    })
+                choices
             };
-
-            Debug.Log(JsonConvert.SerializeObject(body, Formatting.Indented));
 
             var createdQuestion =
                 await PostAsync<QuestionModel>(
@@ -137,7 +160,9 @@ public class QuestionController
         }
         catch (Exception e)
         {
-            Debug.LogError($"[Question] {e}");
+            Debug.LogError(
+                $"[Question] {e}"
+            );
 
             return new CreateQuestionResult
             {
