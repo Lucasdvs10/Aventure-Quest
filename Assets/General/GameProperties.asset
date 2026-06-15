@@ -17,3 +17,7 @@ MonoBehaviour:
   EnemyMaxLife: 30
   BossMaxLife: 70
   answerExplanationDuration: 2
+  enemiesList:
+  - {fileID: 5423194087779465385, guid: 7ce85ad2fa47c98498494a8af140003a, type: 3}
+  - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
+  - {fileID: 5423194087779465385, guid: 61a05f8cd0cd7d845b6caa58538f1a6a, type: 3}

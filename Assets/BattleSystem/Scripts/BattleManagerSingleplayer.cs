@@ -5,9 +5,9 @@ using UnityEngine;
 public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 {
     public bool DelayBewtweenRounds = true;
-    public int battlesAmount = 3;
 
-    public List<GameObject> enemiesList = new();
+    private int battlesAmount;
+    private List<GameObject> enemiesList;
 
     QuestionsManager questionsManager;
     ALifeSystem leftEntityLifeSystem;
@@ -69,6 +69,9 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     void Start()
     {
+        enemiesList = GameContext.GameProperties.enemiesList;
+        battlesAmount = enemiesList.Count;
+
         InstatiateRightEntity();
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
     }
@@ -137,7 +140,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         }
 
 
-        //Verificar se o other entity morreu. Se sim, executar sequência de game over
+        //Verificar se a ultima batalha foi finalizada. Se sim, executar sequência de game over
         if (leftEntityLifeSystem.CurrentLife <= 0 || rightEntityLifeSystem.CurrentLife <= 0 && currentBattle >= battlesAmount - 1)
         {
             HandleGameOver();
@@ -170,7 +173,6 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     private void HandleGameOver()
     {
-        // currentBattle++;
         GameContext.UIGameoverScreenInstance.SetActive(true);
     }
 
