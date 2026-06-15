@@ -1,13 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 {
     public bool DelayBewtweenRounds = true;
+    public int battlesAmount = 3;
+
+    public List<GameObject> enemiesList = new();
 
     QuestionsManager questionsManager;
     ALifeSystem leftEntityLifeSystem;
     ALifeSystem rightEntityLifeSystem;
+    
+    int currentBattle = 0;
     int currentEntityTurn = 0;
 
     bool leftEntityWasCorrect = false;
@@ -28,15 +34,25 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
         questionsManager = GameContext.QuestionsManagerInstance;
 
         leftEntityLifeSystem = GameContext.LeftPlayerGameObjectInstance.GetComponent<ALifeSystem>();
-        rightEntityLifeSystem = GameContext.RightPlayerGameObjectInstance.GetComponent<ALifeSystem>();
 
         leftAnimator = leftEntityLifeSystem.GetComponent<Animator>();
-        rightAnimator = rightEntityLifeSystem.GetComponent<Animator>();
 
         leftDamageSFX = leftEntityLifeSystem.GetComponentInChildren<AudioSource>();
-        rightDamageSFX = rightEntityLifeSystem.GetComponentInChildren<AudioSource>();
+
 
         currentEntityTurn = 0;
+        currentBattle = 0;
+    }
+
+
+    private void InstatiateRightEntity()
+    {
+        GameContext.RightPlayerGameObjectInstance = Instantiate(enemiesList[currentBattle]);
+
+        rightEntityLifeSystem = GameContext.RightPlayerGameObjectInstance.GetComponent<ALifeSystem>();
+        rightAnimator = rightEntityLifeSystem.GetComponent<Animator>();
+        rightDamageSFX = rightEntityLifeSystem.GetComponentInChildren<AudioSource>();
+
     }
 
     void OnEnable()
@@ -53,6 +69,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     void Start()
     {
+        InstatiateRightEntity();
         CurrentEntity.GetComponentInChildren<UITurnIndicator>(true).UITurnIndicatorObject.SetActive(true);
     }
 
@@ -121,10 +138,22 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
 
         //Verificar se o other entity morreu. Se sim, executar sequência de game over
-        if (CurrentEntity.CurrentLife <= 0 || OtherEntity.CurrentLife <= 0)
+        if (leftEntityLifeSystem.CurrentLife <= 0 || rightEntityLifeSystem.CurrentLife <= 0 && currentBattle >= battlesAmount - 1)
         {
             HandleGameOver();
             yield break;
+        }
+
+        if(rightEntityLifeSystem.CurrentLife <= 0)
+        {
+            print("Fim da batalha!");
+
+            Destroy(rightEntityLifeSystem.gameObject);
+
+            yield return new WaitForSeconds(2f);
+            currentBattle++;
+
+            InstatiateRightEntity();
         }
 
         leftEntityWasCorrect = false;
@@ -141,6 +170,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
     private void HandleGameOver()
     {
+        // currentBattle++;
         GameContext.UIGameoverScreenInstance.SetActive(true);
     }
 

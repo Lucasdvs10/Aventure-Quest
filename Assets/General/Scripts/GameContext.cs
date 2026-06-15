@@ -24,7 +24,7 @@ public class GameContext : MonoBehaviour
     public static QuestionsManager QuestionsManagerInstance { get; private set; }
     public static IBattleManager BattleManagerInstance { get; private set; }
     public static GameObject LeftPlayerGameObjectInstance { get; private set; }
-    public static GameObject RightPlayerGameObjectInstance { get; private set; }
+    public static GameObject RightPlayerGameObjectInstance { get;  set; }
     public static GameObject UIGameoverScreenInstance { get; private set; }
     public static TMP_Text StatementTextInstance { get; private set; }
     public static Button ButtonAInstance { get; private set; }
@@ -45,7 +45,7 @@ public class GameContext : MonoBehaviour
         Debug.Assert(LeftPlayerGameObject != null, "O Left Player GameObject está nulo no game context!", this);
         LeftPlayerGameObjectInstance = LeftPlayerGameObject;
 
-        Debug.Assert(RightPlayerGameObject != null, "O Right Player GameObject está nulo no game context!", this);
+        // Debug.Assert(RightPlayerGameObject != null, "O Right Player GameObject está nulo no game context!", this);
         RightPlayerGameObjectInstance = RightPlayerGameObject;
 
         Debug.Assert(questionsManager != null, "O QuestionsManager está nulo no game context!", this);

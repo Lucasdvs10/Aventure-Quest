@@ -659,11 +659,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 815506752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &356748935 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-  m_PrefabInstance: {fileID: 7189156376271764593}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &411105360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,7 +3972,7 @@ MonoBehaviour:
   UseLocalQuestionsProvider: 0
   SOGameProperties: {fileID: 11400000, guid: 26216370ace005f45940a2f813a59a3d, type: 2}
   LeftPlayerGameObject: {fileID: 1452235031}
-  RightPlayerGameObject: {fileID: 356748935}
+  RightPlayerGameObject: {fileID: 0}
   questionsManager: {fileID: 2047288836}
   uIGameoverScreen: {fileID: 1543352221}
   StatementText: {fileID: 2080772928}
@@ -4028,6 +4023,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManagerSingleplayer
   DelayBewtweenRounds: 1
+  battlesAmount: 3
+  enemiesList:
+  - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
+  - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
+  - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
 --- !u!1 &2080772926
 GameObject:
   m_ObjectHideFlags: 0
@@ -4359,74 +4359,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa2b5a2f8549c8a41b100ebc1540e71b, type: 3}
---- !u!1001 &7189156376271764593
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377975945026323426, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 815506752}
   - {fileID: 2934004407884184308}
-  - {fileID: 7189156376271764593}
   - {fileID: 45165238}
   - {fileID: 539735238}
   - {fileID: 125598498}
