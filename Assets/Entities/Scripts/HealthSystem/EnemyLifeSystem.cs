@@ -1,9 +1,18 @@
-using UnityEngine;
 
 public class EnemyLifeSystem : ALifeSystem
 {
+    public bool IsBoss;
     private void Awake()
     {
-        Initialize(GameContext.GameProperties.EnemyMaxLife);
+        InitializeEnemy();
+    }
+
+    public void InitializeEnemy()
+    {
+        if(!IsBoss)
+            Initialize(GameContext.GameProperties.EnemyMaxLife);
+        else
+            Initialize(GameContext.GameProperties.BossMaxLife);
+
     }
 }
