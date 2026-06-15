@@ -62,6 +62,7 @@ public class QuestionsProviderAPI : IQuestionsProvider
                 );
             }
 
+            Debug.Log($"Lenght do result {result.Count}");
             return result;
         }
         catch (Exception e)

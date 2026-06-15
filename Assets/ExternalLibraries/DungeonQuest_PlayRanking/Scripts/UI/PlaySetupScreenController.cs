@@ -51,7 +51,7 @@ public class PlaySetupScreenController : MonoBehaviour
     {
         if (!disciplineDropdown) return;
         disciplineDropdown.ClearOptions();
-        var options = new List<string> { "Variado (todas)" };
+        var options = new List<string> {};
         foreach (var t in tags) options.Add(t.label);
         disciplineDropdown.AddOptions(options);
         disciplineDropdown.value = 0;
@@ -60,7 +60,6 @@ public class PlaySetupScreenController : MonoBehaviour
     private string SelectedTagTarget()
     {
         int idx = disciplineDropdown ? disciplineDropdown.value : 0;
-        if (idx <= 0 || idx - 1 >= tags.Count) return "variado";
         return tags[idx - 1].label;
     }
 

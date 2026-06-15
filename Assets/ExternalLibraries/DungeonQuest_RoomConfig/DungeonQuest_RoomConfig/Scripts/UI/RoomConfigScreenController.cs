@@ -127,7 +127,7 @@ public class RoomConfigScreenController : MonoBehaviour
     {
         if (!disciplineDropdown) return;
         disciplineDropdown.ClearOptions();
-        var options = new List<string> { "Variado (todas)" };   // índice 0
+        var options = new List<string> {  };   // índice 0
         foreach (var t in tags) options.Add(t.label);
         disciplineDropdown.AddOptions(options);
         disciplineDropdown.value = 0;
@@ -136,7 +136,6 @@ public class RoomConfigScreenController : MonoBehaviour
     private string SelectedTagTarget()
     {
         int idx = disciplineDropdown ? disciplineDropdown.value : 0;
-        if (idx <= 0 || idx - 1 >= tags.Count) return "variado";
         return tags[idx - 1].label;   // troque para tags[idx-1].id se o back esperar o id
     }
 
@@ -199,6 +198,8 @@ public class RoomConfigScreenController : MonoBehaviour
             SetJoinInfo(foundRoom);
             if (joinButton) joinButton.interactable = true;
             SetStatus($"Sala \"{foundRoom.title}\" encontrada.");
+
+            SetupSubjectOnPlayerPrefs.SetTagModelFromName(foundRoom.tag_target);
         }
         else
         {
@@ -213,7 +214,9 @@ public class RoomConfigScreenController : MonoBehaviour
     private void SetJoinInfo(RoomModel room)
     {
         if (joinDisciplineLabel)
+        {
             joinDisciplineLabel.text = "Disciplina: " + (room != null && !string.IsNullOrEmpty(room.tag_target) ? room.tag_target : "——");
+        }
         if (joinEnemiesLabel)
             joinEnemiesLabel.text = "Inimigos: " + (room != null ? room.level_quantity.ToString() : "——");
     }

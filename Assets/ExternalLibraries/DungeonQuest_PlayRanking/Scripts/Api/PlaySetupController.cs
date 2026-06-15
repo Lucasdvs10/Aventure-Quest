@@ -10,10 +10,13 @@ public class PlaySetupController
 {
     private const string BaseUrl = "https://dungeon-quest-api.fly.dev/api";
     private static readonly HttpClient HttpClient = new();
+    public static List<TagModel> allTagsLoaded = new();
+    public static TagModel SelectedTag;
 
     public async Task<List<TagModel>> GetTagsAsync()
     {
         var tags = await GetAsync<List<TagModel>>("/tags?limit=100");
+        allTagsLoaded = tags;
         return tags ?? new List<TagModel>();
     }
 

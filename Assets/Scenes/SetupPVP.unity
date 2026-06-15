@@ -2697,6 +2697,7 @@ GameObject:
   - component: {fileID: 1892000917}
   - component: {fileID: 1892000916}
   - component: {fileID: 1892000915}
+  - component: {fileID: 1892000919}
   m_Layer: 0
   m_Name: DisciplineDropdown
   m_TagString: Untagged
@@ -2808,7 +2809,19 @@ MonoBehaviour:
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1892000919}
+        m_TargetAssemblyTypeName: SetupSubjectOnPlayerPrefs, Assembly-CSharp
+        m_MethodName: GetSubjectFromDropdown
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1892000916}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Dropdown, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1892000917
 MonoBehaviour:
@@ -2848,6 +2861,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892000913}
   m_CullTransparentMesh: 1
+--- !u!114 &1892000919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892000913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d454ef70acb25c4db2bbe2799f8fb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetupSubjectOnPlayerPrefs
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
