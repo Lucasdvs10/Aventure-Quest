@@ -12,6 +12,7 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
     QuestionsManager questionsManager;
     ALifeSystem leftEntityLifeSystem;
     ALifeSystem rightEntityLifeSystem;
+    GamePropertiesProvider gamePropertiesProvider;
     
     int currentBattle = 0;
     int currentEntityTurn = 0;
@@ -39,6 +40,8 @@ public class BattleManagerSingleplayer : MonoBehaviour, IBattleManager
 
         leftDamageSFX = leftEntityLifeSystem.GetComponentInChildren<AudioSource>();
 
+        gamePropertiesProvider = GetComponent<GamePropertiesProvider>();
+        gamePropertiesProvider.InitializePropertiesFromAPI();
 
         currentEntityTurn = 0;
         currentBattle = 0;
