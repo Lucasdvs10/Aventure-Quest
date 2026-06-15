@@ -78,3 +78,21 @@ entreguei antes ficou **desatualizado** (inclusive o campo virou `tags`, não
 
 - Entrar em sala por código (`GET /api/rooms/code/{code}` já está no controller).
 - Gerenciar jogadores na sala (`/api/rooms/{id}/users`) e placar (`score`).
+
+---
+
+## Atualização: abas Criar/Entrar + saída
+
+A tela agora tem **duas abas**:
+
+- **CRIAR**: disciplina + nº de inimigos → cria a sala (o back gera o `code`, exibido).
+- **ENTRAR**: digita o código → `GET /rooms/code/{code}` → mostra a **configuração da
+  sala** (disciplina = `tag_target`, inimigos = `level_quantity`) e permite **entrar**
+  (`POST /rooms/{id}/users` com `Session.CurrentUserId`).
+
+E um **X** no canto superior direito que volta ao menu principal.
+
+**Navegação (X):** o controller usa `GetComponent<SceneLoader>()` (igual ao
+`LoginScreenController`). Depois de gerar a UI, **adicione o seu `SceneLoader` no
+GameObject `RoomConfigScreen`** e ajuste `mainMenuScene` (padrão `"MainMenu"`). Para ir
+direto a um lobby após entrar, preencha `lobbySceneAfterJoin`.

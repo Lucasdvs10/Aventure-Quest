@@ -9,8 +9,6 @@ using UnityEngine;
 /// <summary>
 /// Controller "puro" das Salas, no mesmo molde do UserController:
 /// HttpClient estático + async/await + envelope { "response" } + Newtonsoft.
-///
-/// A criação da sala é simples (1 request): o backend gera e devolve o "code".
 /// </summary>
 public class RoomController
 {
@@ -24,12 +22,7 @@ public class RoomController
         return tags ?? new List<TagModel>();
     }
 
-    /// <summary>
-    /// Cria a sala. O backend gera o "code" e o devolve no RoomModel.
-    /// </summary>
-    /// <param name="ownerId">user_id do criador (do login / Session).</param>
-    /// <param name="levelQuantity">quantidade de inimigos/fases.</param>
-    /// <param name="tagTarget">disciplina (label da tag) ou "variado".</param>
+    /// <summary>Cria a sala. O backend gera o "code" e o devolve no RoomModel.</summary>
     public async Task<RoomModel> CreateRoomAsync(string title, string ownerId, int levelQuantity, string tagTarget)
     {
         return await PostAsync<RoomModel>("/rooms", new
@@ -41,10 +34,16 @@ public class RoomController
         });
     }
 
-    /// <summary>Busca uma sala pelo código (útil para entrar numa sala).</summary>
+    /// <summary>Busca uma sala pelo código (aba "Entrar").</summary>
     public async Task<RoomModel> GetRoomByCodeAsync(string code)
     {
         return await GetAsync<RoomModel>("/rooms/code/" + code);
+    }
+
+    /// <summary>Adiciona o usuário logado à sala (entrar de fato).</summary>
+    public async Task<bool> AddUserToRoomAsync(string roomId, string userId, int score = 0)
+    {
+        return await PostOkAsync($"/rooms/{roomId}/users", new { user_id = userId, score = score });
     }
 
     // ---- helpers HTTP (desembrulham o envelope) ----
@@ -90,6 +89,25 @@ public class RoomController
         {
             Debug.LogError($"[Room] Erro POST {endpoint}: {e}");
             return default;
+        }
+    }
+
+    // POST que só precisa saber se deu certo (sem desserializar o corpo).
+    private async Task<bool> PostOkAsync(string endpoint, object body)
+    {
+        try
+        {
+            string json = JsonConvert.SerializeObject(body);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await HttpClient.PostAsync(BaseUrl + endpoint, content);
+            if (!response.IsSuccessStatusCode)
+                Debug.LogWarning($"[Room] POST {endpoint} -> {response.StatusCode}");
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[Room] Erro POST {endpoint}: {e}");
+            return false;
         }
     }
 }

@@ -7,13 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Builder da tela de Configuração de Sala. Gera Canvas + prefab com tudo
-/// ligado ao RoomConfigScreenController.
-///
+/// Builder da tela de Configuração de Sala (com abas Criar/Entrar + X de saída).
 /// Menu:  Dungeon Quest > Build Room Config UI
-///
-/// Scaffold visual: troque o TMP Font Asset pela fonte pixel e os sprites
-/// 9-sliced para casar com o mockup.
 /// </summary>
 public static class RoomConfigUIBuilder
 {
@@ -42,7 +37,6 @@ public static class RoomConfigUIBuilder
         };
 
         EnsureFolder(PrefabFolder);
-
         Canvas canvas = GetOrCreateCanvas();
 
         GameObject bg = NewRect("DQ_Background", canvas.transform);
@@ -53,65 +47,118 @@ public static class RoomConfigUIBuilder
         var pImg = panel.AddComponent<Image>(); pImg.color = Panel; pImg.sprite = _res.standard; pImg.type = Image.Type.Sliced;
         var pRt = panel.GetComponent<RectTransform>();
         pRt.anchorMin = pRt.anchorMax = pRt.pivot = new Vector2(0.5f, 0.5f);
-        pRt.sizeDelta = new Vector2(560, 680);
+        pRt.sizeDelta = new Vector2(560, 660);
         pRt.anchoredPosition = Vector2.zero;
 
         var vlg = panel.AddComponent<VerticalLayoutGroup>();
-        vlg.padding = new RectOffset(28, 28, 24, 24);
-        vlg.spacing = 12;
+        vlg.padding = new RectOffset(26, 26, 22, 22);
+        vlg.spacing = 10;
         vlg.childControlWidth = true; vlg.childForceExpandWidth = true;
         vlg.childControlHeight = true; vlg.childForceExpandHeight = false;
         vlg.childAlignment = TextAnchor.UpperCenter;
 
-        LE(Label("Title", panel.transform, "CONFIGURAÇÃO DE SALA", 24, Bone, FontStyles.Bold, TextAlignmentOptions.Center).gameObject, prefH: 40);
+        // X de saída (flutua no canto superior direito, fora do layout)
+        Button exitBtn = Btn("ExitButton", panel.transform, "X", Panel2, Bone, 18);
+        var exitLE = exitBtn.gameObject.AddComponent<LayoutElement>(); exitLE.ignoreLayout = true;
+        var exitRt = exitBtn.GetComponent<RectTransform>();
+        exitRt.anchorMin = exitRt.anchorMax = exitRt.pivot = new Vector2(1f, 1f);
+        exitRt.sizeDelta = new Vector2(34, 34);
+        exitRt.anchoredPosition = new Vector2(-10, -10);
 
-        LE(Label("NameLabel", panel.transform, "NOME DA SALA (opcional)", 16, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 22);
-        TMP_InputField titleInput = Input("TitleInput", panel.transform, "");
+        LE(Label("Title", panel.transform, "CONFIGURAÇÃO DE SALA", 22, Bone, FontStyles.Bold, TextAlignmentOptions.Center).gameObject, prefH: 38);
+
+        // Barra de abas
+        GameObject tabBar = NewRect("TabBar", panel.transform);
+        var tHlg = tabBar.AddComponent<HorizontalLayoutGroup>();
+        tHlg.spacing = 8; tHlg.childControlWidth = true; tHlg.childForceExpandWidth = true;
+        tHlg.childControlHeight = true; tHlg.childForceExpandHeight = true;
+        LE(tabBar, prefH: 44);
+        Button tabCreate = Btn("TabCreate", tabBar.transform, "CRIAR", Bone, Ink, 15);
+        Button tabJoin = Btn("TabJoin", tabBar.transform, "ENTRAR", Panel2, Bone, 15);
+
+        // ---------- Painel CRIAR ----------
+        GameObject createPanel = VPanel("CreatePanel", panel.transform);
+
+        LE(Label("NameLabel", createPanel.transform, "NOME DA SALA (opcional)", 15, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 20);
+        TMP_InputField titleInput = Input("TitleInput", createPanel.transform, "");
         ((TMP_Text)titleInput.placeholder).text = "Ex.: Quiz da Turma";
-        LE(titleInput.gameObject, prefH: 46);
+        LE(titleInput.gameObject, prefH: 44);
 
-        LE(Label("DiscLabel", panel.transform, "DISCIPLINA", 16, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 22);
-        TMP_Dropdown disc = Dropdown("DisciplineDropdown", panel.transform);
-        LE(disc.gameObject, prefH: 46);
+        LE(Label("DiscLabel", createPanel.transform, "DISCIPLINA", 15, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 20);
+        TMP_Dropdown disc = Dropdown("DisciplineDropdown", createPanel.transform);
+        LE(disc.gameObject, prefH: 44);
 
-        LE(Label("EnemyLabel", panel.transform, "QUANTIDADE DE INIMIGOS", 16, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 22);
-
-        // Stepper: [ - ] [ valor ] [ + ]
-        GameObject stepper = NewRect("EnemyStepper", panel.transform);
+        LE(Label("EnemyLabel", createPanel.transform, "QUANTIDADE DE INIMIGOS", 15, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 20);
+        GameObject stepper = NewRect("EnemyStepper", createPanel.transform);
         var sHlg = stepper.AddComponent<HorizontalLayoutGroup>();
         sHlg.spacing = 10; sHlg.childAlignment = TextAnchor.MiddleCenter;
         sHlg.childControlWidth = true; sHlg.childForceExpandWidth = false;
         sHlg.childControlHeight = true; sHlg.childForceExpandHeight = true;
-        LE(stepper, prefH: 52);
-
-        Button minus = Btn("MinusButton", stepper.transform, "−", Panel2, Bone, 22);
-        LE(minus.gameObject, minW: 64, prefW: 64);
+        LE(stepper, prefH: 50);
+        Button minus = Btn("MinusButton", stepper.transform, "-", Panel2, Bone, 22);
+        LE(minus.gameObject, minW: 60, prefW: 60);
         TMP_Text qty = Label("QuantityValue", stepper.transform, "10", 26, Bone, FontStyles.Bold, TextAlignmentOptions.Center);
         LE(qty.gameObject, minW: 90, prefW: 90);
         Button plus = Btn("PlusButton", stepper.transform, "+", Panel2, Bone, 22);
-        LE(plus.gameObject, minW: 64, prefW: 64);
+        LE(plus.gameObject, minW: 60, prefW: 60);
 
-        Button createBtn = Btn("CreateButton", panel.transform, "CRIAR SALA", Bone, Ink, 16);
-        LE(createBtn.gameObject, prefH: 52);
+        Button createBtn = Btn("CreateButton", createPanel.transform, "CRIAR SALA", Bone, Ink, 16);
+        LE(createBtn.gameObject, prefH: 50);
 
-        // Bloco do código gerado.
-        GameObject codeBox = NewRect("CodeBox", panel.transform);
+        GameObject codeBox = NewRect("CodeBox", createPanel.transform);
         var cbImg = codeBox.AddComponent<Image>(); cbImg.color = Ink; cbImg.sprite = _res.standard; cbImg.type = Image.Type.Sliced;
         var cbVlg = codeBox.AddComponent<VerticalLayoutGroup>();
-        cbVlg.padding = new RectOffset(10, 10, 8, 8); cbVlg.spacing = 2;
+        cbVlg.padding = new RectOffset(10, 10, 6, 6); cbVlg.spacing = 2;
         cbVlg.childControlWidth = true; cbVlg.childForceExpandWidth = true;
         cbVlg.childControlHeight = true; cbVlg.childForceExpandHeight = false;
         cbVlg.childAlignment = TextAnchor.MiddleCenter;
-        LE(codeBox, prefH: 84);
-        LE(Label("CodeCaption", codeBox.transform, "CÓDIGO DA SALA", 14, Dim, FontStyles.Normal, TextAlignmentOptions.Center).gameObject, prefH: 20);
-        TMP_Text code = Label("CodeText", codeBox.transform, "——", 34, Gold, FontStyles.Bold, TextAlignmentOptions.Center);
-        LE(code.gameObject, prefH: 44);
+        LE(codeBox, prefH: 76);
+        LE(Label("CodeCaption", codeBox.transform, "CÓDIGO DA SALA", 13, Dim, FontStyles.Normal, TextAlignmentOptions.Center).gameObject, prefH: 18);
+        TMP_Text code = Label("CodeText", codeBox.transform, "——", 32, Gold, FontStyles.Bold, TextAlignmentOptions.Center);
+        LE(code.gameObject, prefH: 42);
 
-        TMP_Text status = Label("StatusText", panel.transform, "", 16, Dim, FontStyles.Normal, TextAlignmentOptions.Center);
-        LE(status.gameObject, prefH: 28);
+        // ---------- Painel ENTRAR ----------
+        GameObject joinPanel = VPanel("JoinPanel", panel.transform);
 
+        LE(Label("CodeInLabel", joinPanel.transform, "CÓDIGO DA SALA", 15, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 20);
+        TMP_InputField codeInput = Input("CodeInput", joinPanel.transform, "");
+        ((TMP_Text)codeInput.placeholder).text = "Ex.: QUIZ123";
+        LE(codeInput.gameObject, prefH: 44);
+
+        Button findBtn = Btn("FindButton", joinPanel.transform, "BUSCAR SALA", Panel2, Bone, 15);
+        LE(findBtn.gameObject, prefH: 46);
+
+        GameObject infoBox = NewRect("InfoBox", joinPanel.transform);
+        var ibImg = infoBox.AddComponent<Image>(); ibImg.color = Ink; ibImg.sprite = _res.standard; ibImg.type = Image.Type.Sliced;
+        var ibVlg = infoBox.AddComponent<VerticalLayoutGroup>();
+        ibVlg.padding = new RectOffset(14, 14, 10, 10); ibVlg.spacing = 6;
+        ibVlg.childControlWidth = true; ibVlg.childForceExpandWidth = true;
+        ibVlg.childControlHeight = true; ibVlg.childForceExpandHeight = false;
+        ibVlg.childAlignment = TextAnchor.MiddleLeft;
+        LE(infoBox, prefH: 86);
+        LE(Label("ConfigCaption", infoBox.transform, "CONFIGURAÇÃO DA SALA", 13, Dim, FontStyles.Normal, TextAlignmentOptions.Left).gameObject, prefH: 18);
+        TMP_Text discInfo = Label("JoinDiscipline", infoBox.transform, "Disciplina: ——", 18, Bone, FontStyles.Normal, TextAlignmentOptions.Left);
+        LE(discInfo.gameObject, prefH: 24);
+        TMP_Text enemyInfo = Label("JoinEnemies", infoBox.transform, "Inimigos: ——", 18, Bone, FontStyles.Normal, TextAlignmentOptions.Left);
+        LE(enemyInfo.gameObject, prefH: 24);
+
+        Button joinBtn = Btn("JoinButton", joinPanel.transform, "ENTRAR NA SALA", Bone, Ink, 16);
+        LE(joinBtn.gameObject, prefH: 50);
+
+        joinPanel.SetActive(false);   // começa na aba CRIAR
+
+        // ---------- Status (compartilhado) ----------
+        TMP_Text status = Label("StatusText", panel.transform, "", 15, Dim, FontStyles.Normal, TextAlignmentOptions.Center);
+        LE(status.gameObject, prefH: 26);
+
+        // ---------- Liga ao controller ----------
         var ctrl = panel.AddComponent<RoomConfigScreenController>();
         var so = new SerializedObject(ctrl);
+        so.FindProperty("tabCreateButton").objectReferenceValue = tabCreate;
+        so.FindProperty("tabJoinButton").objectReferenceValue = tabJoin;
+        so.FindProperty("createPanel").objectReferenceValue = createPanel;
+        so.FindProperty("joinPanel").objectReferenceValue = joinPanel;
+        so.FindProperty("exitButton").objectReferenceValue = exitBtn;
         so.FindProperty("titleInput").objectReferenceValue = titleInput;
         so.FindProperty("disciplineDropdown").objectReferenceValue = disc;
         so.FindProperty("minusButton").objectReferenceValue = minus;
@@ -119,6 +166,11 @@ public static class RoomConfigUIBuilder
         so.FindProperty("quantityValueLabel").objectReferenceValue = qty;
         so.FindProperty("createButton").objectReferenceValue = createBtn;
         so.FindProperty("codeText").objectReferenceValue = code;
+        so.FindProperty("codeInput").objectReferenceValue = codeInput;
+        so.FindProperty("findButton").objectReferenceValue = findBtn;
+        so.FindProperty("joinDisciplineLabel").objectReferenceValue = discInfo;
+        so.FindProperty("joinEnemiesLabel").objectReferenceValue = enemyInfo;
+        so.FindProperty("joinButton").objectReferenceValue = joinBtn;
         so.FindProperty("statusText").objectReferenceValue = status;
         so.ApplyModifiedPropertiesWithoutUndo();
 
@@ -128,7 +180,20 @@ public static class RoomConfigUIBuilder
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        Debug.Log("[RoomConfig] UI gerada em " + PrefabFolder + ". Defina Session.CurrentUserId no login (ou use Owner Id Override para testar).");
+        Debug.Log("[RoomConfig] UI gerada. Adicione o SceneLoader no GameObject RoomConfigScreen para o X funcionar. Defina Session.CurrentUserId no login (ou Owner Id Override p/ testar).");
+    }
+
+    // -- containers ------------------------------------------------------------
+
+    static GameObject VPanel(string name, Transform parent)
+    {
+        GameObject go = NewRect(name, parent);
+        var vlg = go.AddComponent<VerticalLayoutGroup>();
+        vlg.spacing = 8;
+        vlg.childControlWidth = true; vlg.childForceExpandWidth = true;
+        vlg.childControlHeight = true; vlg.childForceExpandHeight = false;
+        vlg.childAlignment = TextAnchor.UpperCenter;
+        return go;
     }
 
     // -- helpers de elemento ---------------------------------------------------
