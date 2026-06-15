@@ -4025,7 +4025,7 @@ MonoBehaviour:
   DelayBewtweenRounds: 1
   battlesAmount: 3
   enemiesList:
-  - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
+  - {fileID: 5423194087779465385, guid: 7ce85ad2fa47c98498494a8af140003a, type: 3}
   - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
   - {fileID: 5423194087779465385, guid: ff72eaa4917165440a241ff01a1325fa, type: 3}
 --- !u!1 &2080772926

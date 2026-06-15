@@ -101,11 +101,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 87034805778537710, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
       propertyPath: m_text
-      value: Enemy Name
+      value: Dragon
       objectReference: {fileID: 0}
     - target: {fileID: 637744979769549166, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
       propertyPath: m_Name
-      value: Enemy Variant
+      value: Dragon
       objectReference: {fileID: 0}
     - target: {fileID: 2736325915294292517, guid: c01d3f7f46365714fb66bc1ca2f5142b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,6 +192,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  IsBoss: 1
 --- !u!95 &5248746527737102631
 Animator:
   serializedVersion: 7
