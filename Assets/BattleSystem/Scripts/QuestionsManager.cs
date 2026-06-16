@@ -21,6 +21,7 @@ public class QuestionsManager : MonoBehaviour
 
         Shuffle(ref questionsList);
 
+        print($"Lenght {questionsList.Count}");
         var currentQuestion = questionsList[CurrentQuestionIndex];
 
         GameContext.StatementTextInstance.text = currentQuestion.Statement;

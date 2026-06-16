@@ -15,7 +15,7 @@ public class GamePropertiesProvider : MonoBehaviour
     {
         if (sOGameProperties.IsTutorial)
         {
-            EnemyType[] enemyTypes = {EnemyType.DRAGON};
+            EnemyType[] enemyTypes = {EnemyType.MAGE};
             sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
         }
 
