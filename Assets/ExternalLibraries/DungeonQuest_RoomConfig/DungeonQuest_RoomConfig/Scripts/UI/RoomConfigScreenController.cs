@@ -6,21 +6,22 @@ using UnityEngine.UI;
 /// <summary>
 /// Tela de Configuração de Sala com duas abas:
 ///   - CRIAR  : escolhe disciplina + nº de inimigos e cria a sala (o back gera o code).
+///              AO CRIAR, os controles de configuração somem e aparece o botão Jogar
+///              (o código continua visível para compartilhar).
 ///   - ENTRAR : digita o código, busca a sala (GET /rooms/code) e mostra a
 ///              configuração dela (disciplina + nº de inimigos); pode entrar.
 ///
-/// Tem ainda um "X" no canto que volta ao menu principal (via SceneLoader, igual
-/// ao LoginScreenController).
-///
-/// Mesmo molde dos seus controllers: controller "puro" no Awake + async void.
+/// Tem ainda um "X" no canto que volta ao menu principal (via SceneLoader).
 /// </summary>
 public class RoomConfigScreenController : MonoBehaviour
 {
     private RoomController roomController;
-    private SceneLoader sceneLoader;   // mesmo componente usado no LoginScreenController
+    private SceneLoader sceneLoader;
 
     [Header("Navegação")]
     [SerializeField] private string mainMenuScene = "MainMenu";
+    [Tooltip("Cena de combate carregada pelo botão Jogar.")]
+    [SerializeField] private string combatScene = "Combat";
     [Tooltip("Opcional: cena a carregar após entrar numa sala (deixe vazio para só exibir status).")]
     [SerializeField] private string lobbySceneAfterJoin = "";
 
@@ -32,10 +33,12 @@ public class RoomConfigScreenController : MonoBehaviour
     [SerializeField] private Button exitButton;       // X -> menu principal
 
     [Header("Dono da sala")]
-    [Tooltip("Vazio = usa Session.CurrentUserId (do login). Preencha só para testar.")]
+    [Tooltip("Vazio = usa PlayerPrefs 'CurrentUserID' (do login). Preencha só para testar.")]
     [SerializeField] private string ownerIdOverride = "";
 
     [Header("Aba CRIAR")]
+    [Tooltip("Grupo com os controles de configuração; some quando a sala é criada.")]
+    [SerializeField] private GameObject createConfigGroup;
     [SerializeField] private TMP_InputField titleInput;
     [SerializeField] private TMP_Dropdown disciplineDropdown;
     [SerializeField] private Button minusButton;
@@ -43,6 +46,8 @@ public class RoomConfigScreenController : MonoBehaviour
     [SerializeField] private TMP_Text quantityValueLabel;
     [SerializeField] private Button createButton;
     [SerializeField] private TMP_Text codeText;
+    [Tooltip("Aparece somente após a sala ser criada.")]
+    [SerializeField] private Button playButton;
 
     [Header("Aba ENTRAR")]
     [SerializeField] private TMP_InputField codeInput;
@@ -79,6 +84,7 @@ public class RoomConfigScreenController : MonoBehaviour
         SetCode("——");
         SetJoinInfo(null);
         if (joinButton) joinButton.interactable = false;
+        if (playButton) { playButton.onClick.AddListener(Play); playButton.gameObject.SetActive(false); }
         SetStatus("Carregando disciplinas...");
 
         if (tabCreateButton) tabCreateButton.onClick.AddListener(() => SelectTab(0));
@@ -127,7 +133,7 @@ public class RoomConfigScreenController : MonoBehaviour
     {
         if (!disciplineDropdown) return;
         disciplineDropdown.ClearOptions();
-        var options = new List<string> {  };   // índice 0
+        var options = new List<string>();
         foreach (var t in tags) options.Add(t.label);
         disciplineDropdown.AddOptions(options);
         disciplineDropdown.value = 0;
@@ -135,8 +141,10 @@ public class RoomConfigScreenController : MonoBehaviour
 
     private string SelectedTagTarget()
     {
+        if (tags.Count == 0) return "";
         int idx = disciplineDropdown ? disciplineDropdown.value : 0;
-        return tags[idx - 1].label;   // troque para tags[idx-1].id se o back esperar o id
+        idx = Mathf.Clamp(idx, 0, tags.Count - 1);
+        return tags[idx].label;   // troque para tags[idx].id se o back esperar o id
     }
 
     private void ChangeQuantity(int delta)
@@ -171,12 +179,27 @@ public class RoomConfigScreenController : MonoBehaviour
         if (lastCreatedRoom != null && !string.IsNullOrEmpty(lastCreatedRoom.code))
         {
             SetCode(lastCreatedRoom.code);
-            SetStatus($"Sala criada! {quantity} inimigos · {tagTarget}.");
+            SetupSubjectOnPlayerPrefs.SetTagModelFromName(tagTarget);   // guarda a disciplina (host)
+            ShowPlayState();
+            SetStatus($"Sala criada! Compartilhe o código e clique em Jogar.");
         }
         else
         {
             SetStatus("Falha ao criar a sala.");
         }
+    }
+
+    // Esconde a configuração e revela o botão Jogar (mantém o código visível).
+    private void ShowPlayState()
+    {
+        if (createConfigGroup) createConfigGroup.SetActive(false);
+        if (playButton) playButton.gameObject.SetActive(true);
+    }
+
+    public void Play()
+    {
+        if (sceneLoader) sceneLoader.LoadScene(combatScene);
+        else Debug.LogWarning("[RoomConfig] SceneLoader ausente: adicione-o ao GameObject para iniciar o combate.");
     }
 
     // ---- Entrar em sala -----------------------------------------------------
