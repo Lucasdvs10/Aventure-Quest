@@ -24,7 +24,18 @@ public class GamePropertiesProvider : MonoBehaviour
 
             var enemiesAmount = PlaySetupController.enemiesAmount;
 
-            EnemyType[] enemyTypes = {GetRandomEnemy()};
+            EnemyType[] enemyTypes = new EnemyType[enemiesAmount];
+
+            for (int i = 0; i < enemiesAmount - 1; i++)
+            {
+                if(i % 5 != 0 || i == 0)
+                    enemyTypes[i] = GetRandomEnemy();
+                else
+                    enemyTypes[i] = GetRandomBoss();
+            }
+
+            enemyTypes[enemiesAmount - 1] = GetRandomBoss();
+
             sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
         }
 
