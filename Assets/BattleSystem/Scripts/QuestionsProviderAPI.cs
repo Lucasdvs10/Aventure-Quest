@@ -8,7 +8,6 @@ using UnityEngine;
 public class QuestionsProviderAPI : IQuestionsProvider
 {
     private const string BaseUrl = "https://dungeon-quest-api.fly.dev/api";
-    private string QuestionsEndpoint = $"{BaseUrl}/questions";
 
     private static readonly HttpClient HttpClient = new();
 
@@ -16,7 +15,20 @@ public class QuestionsProviderAPI : IQuestionsProvider
     {
         try
         {
-            string json = await HttpClient.GetStringAsync(QuestionsEndpoint);
+            TagModel selectedTag = PlaySetupController.SelectedTag;
+
+            if (selectedTag == null || string.IsNullOrWhiteSpace(selectedTag.id))
+            {
+                Debug.LogWarning("Nenhuma tag selecionada.");
+
+                return new List<Question>();
+            }
+
+            string endpoint =
+                $"{BaseUrl}/questions/tag/{selectedTag.id}";
+
+            string json =
+                await HttpClient.GetStringAsync(endpoint);
 
             ApiResponse response =
                 JsonUtility.FromJson<ApiResponse>(json);
@@ -49,6 +61,15 @@ public class QuestionsProviderAPI : IQuestionsProvider
                     }
                 }
 
+                if (string.IsNullOrEmpty(correctOption))
+                {
+                    Debug.LogWarning(
+                        $"Pergunta ignorada: {apiQuestion.prompt}. Resposta correta não encontrada."
+                    );
+
+                    continue;
+                }
+
                 result.Add(
                     new Question(
                         apiQuestion.prompt,
@@ -62,12 +83,15 @@ public class QuestionsProviderAPI : IQuestionsProvider
                 );
             }
 
-            Debug.Log($"Lenght do result {result.Count}");
+            Debug.Log($"Quantidade de perguntas carregadas: {result.Count}");
+
             return result;
         }
         catch (Exception e)
         {
-            Debug.LogError($"Erro ao carregar perguntas da API: {e}");
+            Debug.LogError(
+                $"Erro ao carregar perguntas da API: {e}"
+            );
 
             return new List<Question>();
         }
@@ -75,7 +99,6 @@ public class QuestionsProviderAPI : IQuestionsProvider
 
     public Task SaveQuestionAsync(Question newQuestion)
     {
-        // Ainda não implementado
         return Task.CompletedTask;
     }
 
