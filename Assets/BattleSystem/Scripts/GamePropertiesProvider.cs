@@ -13,8 +13,43 @@ public class GamePropertiesProvider : MonoBehaviour
 
     public void InitializePropertiesFromAPI()
     {
-        EnemyType[] enemyTypes = {EnemyType.SKELETON};
-        sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
+        if (sOGameProperties.IsTutorial)
+        {
+            EnemyType[] enemyTypes = {EnemyType.SKELETON};
+            sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
+        }
+
+        else
+        {
+
+            var enemiesAmount = PlaySetupController.enemiesAmount;
+
+            EnemyType[] enemyTypes = {GetRandomEnemy()};
+            sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
+        }
+
+    }
+
+    public EnemyType GetRandomBoss()
+    {
+        var rng = Random.Range(0f,1f);
+
+        if(rng <= 0.5f)
+            return EnemyType.DRAGON;
+        return EnemyType.GOLLEM;
+    }
+
+    public EnemyType GetRandomEnemy()
+    {
+        var rng = Random.Range(0f, 1f);
+
+        if (rng <= 0.25f)
+            return EnemyType.SKELETON;
+        else if (rng <= 0.5f)
+            return EnemyType.MAGE;
+        else if (rng <= 0.75f)
+            return EnemyType.BATS;
+        return EnemyType.GOLLEM;
     }
 
     public List<GameObject> GetEnemiesFromTypesList(EnemyType[] enemyType)

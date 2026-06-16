@@ -16,4 +16,6 @@ public class SOGameProperties : ScriptableObject
     public float answerExplanationDuration;
 
     public List<GameObject> enemiesList;
+
+    public bool IsTutorial = false;
 }

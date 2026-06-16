@@ -12,6 +12,7 @@ public class PlaySetupController
     private static readonly HttpClient HttpClient = new();
     public static List<TagModel> allTagsLoaded = new();
     public static TagModel SelectedTag;
+    public static int enemiesAmount;
 
     public async Task<List<TagModel>> GetTagsAsync()
     {

@@ -223,6 +223,7 @@ public class RoomConfigScreenController : MonoBehaviour
             SetStatus($"Sala \"{foundRoom.title}\" encontrada.");
 
             SetupSubjectOnPlayerPrefs.SetTagModelFromName(foundRoom.tag_target);
+            PlaySetupController.enemiesAmount = foundRoom.level_quantity;
         }
         else
         {
