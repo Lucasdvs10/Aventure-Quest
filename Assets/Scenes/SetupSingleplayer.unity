@@ -6787,7 +6787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomConfigScreenController
   mainMenuScene: MainMenu
   combatScene: BattleSceneSingleplayer
-  lobbySceneAfterJoin: 
+  lobbySceneAfterJoin: BattleSceneSingleplayer
   tabCreateButton: {fileID: 321131539}
   tabJoinButton: {fileID: 975669645}
   createPanel: {fileID: 1539853127}
