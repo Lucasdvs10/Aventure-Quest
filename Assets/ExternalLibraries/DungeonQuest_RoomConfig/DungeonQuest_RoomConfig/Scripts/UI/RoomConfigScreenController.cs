@@ -182,6 +182,7 @@ public class RoomConfigScreenController : MonoBehaviour
             SetupSubjectOnPlayerPrefs.SetTagModelFromName(tagTarget);   // guarda a disciplina (host)
             ShowPlayState();
             SetStatus($"Sala criada! Compartilhe o código e clique em Jogar.");
+            PlaySetupController.enemiesAmount = lastCreatedRoom.level_quantity;
         }
         else
         {

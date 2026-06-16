@@ -60,7 +60,7 @@ public class GamePropertiesProvider : MonoBehaviour
             return EnemyType.MAGE;
         else if (rng <= 0.75f)
             return EnemyType.BATS;
-        return EnemyType.GOLLEM;
+        return EnemyType.DARK_KNIGHT;
     }
 
     public List<GameObject> GetEnemiesFromTypesList(EnemyType[] enemyType)
