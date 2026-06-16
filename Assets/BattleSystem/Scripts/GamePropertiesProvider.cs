@@ -13,7 +13,7 @@ public class GamePropertiesProvider : MonoBehaviour
 
     public void InitializePropertiesFromAPI()
     {
-        EnemyType[] enemyTypes = {EnemyType.SKELETON, EnemyType.GOLLEM, EnemyType.SKELETON};
+        EnemyType[] enemyTypes = {EnemyType.SKELETON};
         sOGameProperties.enemiesList = GetEnemiesFromTypesList(enemyTypes);
     }
 
