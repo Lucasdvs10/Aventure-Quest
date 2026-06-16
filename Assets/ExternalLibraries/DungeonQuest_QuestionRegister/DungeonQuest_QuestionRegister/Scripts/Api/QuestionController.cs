@@ -50,6 +50,17 @@ public class QuestionController
         return tags ?? new List<TagModel>();
     }
 
+    public async Task<TagModel> CreateTagAsync(string label)
+    {
+        string createdBy = PlayerPrefs.GetString("CurrentUserID", "");
+        if (string.IsNullOrEmpty(createdBy))
+        {
+            Debug.LogError("[Question] Usuário não autenticado — não dá pra criar tag.");
+            return null;
+        }
+        return await PostAsync<TagModel>("/tags", new { label, created_by = createdBy });
+    }
+
     // =====================================================================
     // Criação (3 passos)
     // =====================================================================

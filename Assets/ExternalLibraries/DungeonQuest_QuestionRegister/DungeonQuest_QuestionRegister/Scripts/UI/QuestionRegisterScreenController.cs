@@ -5,11 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Tela de Cadastro de Perguntas. Mesmo molde do LoginScreenController:
-/// instancia o controller "puro" no Awake e usa async void nos botões.
-///
-/// Monta: enunciado + explicação + seleção de temas (multi) + alternativas
-/// (uma marcada como correta) e dispara o fluxo de 3 passos no QuestionController.
+/// Tela de Cadastro de Perguntas. Além de enunciado/explicação, seleção de
+/// temas (multi) e alternativas, agora permite CRIAR um tema novo na hora
+/// (POST /tags) — o tema criado já entra na lista e fica selecionado.
 /// </summary>
 public class QuestionRegisterScreenController : MonoBehaviour
 {
@@ -22,6 +20,8 @@ public class QuestionRegisterScreenController : MonoBehaviour
     [Header("Temas (multi-seleção)")]
     [SerializeField] private Transform tagListContainer;        // Content do scroll de temas
     [SerializeField] private GameObject tagTogglePrefab;        // prefab TagToggle
+    [SerializeField] private TMP_InputField newTagInput;        // nome do tema novo
+    [SerializeField] private Button addTagButton;               // cria o tema
 
     [Header("Alternativas")]
     [SerializeField] private Transform choiceListContainer;     // Content do scroll de alternativas
@@ -49,6 +49,7 @@ public class QuestionRegisterScreenController : MonoBehaviour
         SetStatus("Carregando temas...");
 
         if (addChoiceButton) addChoiceButton.onClick.AddListener(AddChoice);
+        if (addTagButton) addTagButton.onClick.AddListener(AddTag);
         if (saveButton) saveButton.onClick.AddListener(Save);
 
         // Integração viva: temas vêm da API.
@@ -60,19 +61,59 @@ public class QuestionRegisterScreenController : MonoBehaviour
 
         SetInteractable(true);
         SetStatus(tags.Count > 0 ? "Pronto. Cadastre a pergunta."
-                                 : "Atenção: nenhum tema cadastrado (crie tags antes).");
+                                 : "Nenhum tema ainda — crie um abaixo.");
     }
 
     // ---- Temas --------------------------------------------------------------
 
     private void BuildTagToggles(List<TagModel> tags)
     {
-        foreach (var tag in tags)
+        foreach (var tag in tags) AddTagToggle(tag);
+    }
+
+    private TagToggleController AddTagToggle(TagModel tag, bool selected = false)
+    {
+        var go = Instantiate(tagTogglePrefab, tagListContainer);
+        var item = go.GetComponent<TagToggleController>();
+        item.Initialize(tag);
+        if (selected) item.SetOn(true);
+        tagToggles.Add(item);
+        return item;
+    }
+
+    // Cria um tema novo (POST /tags) e já o adiciona/seleciona na lista.
+    public async void AddTag()
+    {
+        string label = newTagInput ? newTagInput.text?.Trim() : null;
+        if (string.IsNullOrEmpty(label)) { SetStatus("Digite o nome do tema."); return; }
+
+        // Já existe? Apenas seleciona (evita duplicar).
+        var existing = tagToggles.FirstOrDefault(
+            t => t.Label != null && t.Label.Trim().ToLower() == label.ToLower());
+        if (existing != null)
         {
-            var go = Instantiate(tagTogglePrefab, tagListContainer);
-            var item = go.GetComponent<TagToggleController>();
-            item.Initialize(tag);
-            tagToggles.Add(item);
+            existing.SetOn(true);
+            if (newTagInput) newTagInput.text = string.Empty;
+            SetStatus($"Tema \"{label}\" já existe — selecionado.");
+            return;
+        }
+
+        if (addTagButton) addTagButton.interactable = false;
+        SetStatus("Criando tema...");
+
+        var created = await questionController.CreateTagAsync(label);
+
+        if (addTagButton) addTagButton.interactable = true;
+
+        if (created != null && !string.IsNullOrEmpty(created.id))
+        {
+            AddTagToggle(created, selected: true);
+            if (newTagInput) newTagInput.text = string.Empty;
+            SetStatus($"Tema \"{created.label}\" criado e selecionado.");
+        }
+        else
+        {
+            SetStatus("Falha: faça login ou verifique a conexão.");
         }
     }
 
@@ -120,7 +161,6 @@ public class QuestionRegisterScreenController : MonoBehaviour
             string l = row.Label;
             if (string.IsNullOrEmpty(l)) continue;
             if (row.IsCorrect) correctIndex = labels.Count;
-            print("entra aqui?");
             labels.Add(l);
         }
 
@@ -168,6 +208,7 @@ public class QuestionRegisterScreenController : MonoBehaviour
     private void SetInteractable(bool value)
     {
         if (addChoiceButton) addChoiceButton.interactable = value;
+        if (addTagButton) addTagButton.interactable = value;
         if (saveButton) saveButton.interactable = value;
     }
 

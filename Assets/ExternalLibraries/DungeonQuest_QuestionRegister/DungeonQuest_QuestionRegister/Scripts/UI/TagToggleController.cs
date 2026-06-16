@@ -11,14 +11,18 @@ public class TagToggleController : MonoBehaviour
     [SerializeField] private Toggle toggle;
     [SerializeField] private TMP_Text label;
 
-    /// <summary>Id da tag (vai para tag_ids da pergunta).</summary>
+    /// <summary>Id da tag (vai para tags da pergunta).</summary>
     public string TagId { get; private set; }
+
+    /// <summary>Rótulo da tag (usado para evitar duplicar ao criar um tema novo).</summary>
+    public string Label { get; private set; }
 
     public bool IsOn => toggle && toggle.isOn;
 
     public void Initialize(TagModel tag)
     {
         TagId = tag.id;
+        Label = tag.label;
         if (label) label.text = tag.label;
         if (toggle) toggle.SetIsOnWithoutNotify(false);
     }
